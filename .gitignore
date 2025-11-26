@@ -1,0 +1,33 @@
+# Quarto
+/.quarto/
+/_output/
+**/*.quarto_ipynb
+_site/
+_book/
+
+# R
+.Rproj.user
+.Rhistory
+.RData
+*.Rproj
+
+# Python
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+venv/
+env/
+
+# MATLAB
+*.asv
+*.m~
+
+# LaTeX
+*.aux
+*.log
+*.out
+*.toc
+
+# System
+.DS_Store
+Thumbs.db

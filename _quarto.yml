@@ -1,0 +1,25 @@
+project:
+  type: manuscript
+  output-dir: _output
+
+manuscript:
+  article: manuscript/index.qmd
+
+format:
+  html:
+    theme: cosmo
+    toc: true
+    toc-depth: 3
+    number-sections: true
+    code-fold: true
+  pdf:
+    documentclass: book
+    toc: true
+  docx: default
+
+bibliography: references/references.bib
+link-citations: true
+
+execute:
+  freeze: auto
+  cache: true

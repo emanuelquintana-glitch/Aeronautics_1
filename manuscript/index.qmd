@@ -1,0 +1,27 @@
+---
+title: "Spacecraft Dynamics and Control"
+subtitle: "Mathematical Foundations and Applications"
+author:
+  - name: Emanuel Quintana Silva
+    orcid: 0000-0000-0000-0000
+    email: emanuel.quintana@uptc.edu.co
+    affiliations:
+      - name: Universidad Pedagógica y Tecnológica de Colombia
+        department: School of Engineering
+        address: Sogamoso, Boyacá
+        country: Colombia
+date: today
+abstract: |
+  Comprehensive treatment of spacecraft dynamics and control systems using the Embedded Model Control approach.
+keywords:
+  - Spacecraft Dynamics
+  - Attitude Control
+  - Embedded Model Control
+bibliography: ../references/references.bib
+---
+
+# Introduction
+
+This manuscript presents a rigorous treatment of spacecraft dynamics and control.
+
+See @canuto2018spacecraft for the foundational methodology.
