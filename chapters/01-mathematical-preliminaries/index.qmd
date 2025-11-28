@@ -197,7 +197,7 @@ This ensures robust performance before the disturbance significantly affects the
 
 ## Reading Flow
 
-The logical reading sequence is illustrated in @fig-reading-sequence. The diagram is organized as a **top-to-bottom flow**, where a chapter should be read before another if there is a descending link.
+The logical reading sequence is illustrated in Figure \@ref(fig:reading-sequence). The diagram is organized as a **top-to-bottom flow**, where a chapter should be read before another if there is a descending link.
 
 ```{mermaid}
 #| label: fig-reading-sequence

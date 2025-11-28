@@ -169,7 +169,7 @@ The GNC system typically consists of three main subsystems:
 
 ### Functional Architecture
 
-The typical architecture of a spacecraft GNC system is illustrated in @fig-gnc-architecture.
+The typical architecture of a spacecraft GNC system is illustrated in Figure \@ref(fig:gnc-architecture).
 
 ```{mermaid}
 #| label: fig-gnc-architecture
