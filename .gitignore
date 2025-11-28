@@ -1,33 +1,39 @@
-# Quarto
-/.quarto/
-/_output/
-**/*.quarto_ipynb
-_site/
-_book/
-
-# R
-.Rproj.user
-.Rhistory
-.RData
-*.Rproj
+# Quarto outputs
+_output/
+_freeze/
+.quarto/
 
 # Python
+.venv/
 __pycache__/
-*.py[cod]
-.ipynb_checkpoints/
-venv/
-env/
+*.pyc
 
-# MATLAB
-*.asv
-*.m~
-
-# LaTeX
-*.aux
-*.log
-*.out
-*.toc
+# Jupyter
+*.ipynb
+.jupyter_cache/
 
 # System
 .DS_Store
 Thumbs.db
+
+# LaTeX temporary files
+*.aux
+*.log
+*.out
+*.toc
+*.lof
+*.lot
+
+# Manuscript outputs (opcional, si quieres mantenerlos)
+manuscript/index.html
+manuscript/index.pdf
+manuscript/index.docx
+manuscript/index.tex
+
+# Chapter outputs
+chapters/*/index.html
+chapters/*/index.pdf
+
+# README outputs
+README.html
+README_files/
