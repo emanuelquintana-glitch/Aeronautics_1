@@ -1,0 +1,844 @@
+---
+title: "Introduction"
+subtitle: "Spacecraft Dynamics and Control: The Embedded Model Control Approach"
+author: "Emanuel Quintana Silva"
+date: today
+chapter-number: 1
+---
+
+# Objectives and Rationale {#sec-objectives-rationale}
+
+## Overview
+
+This manuscript represents an extension and comprehensive revision of lecture notes originally developed for a graduate-level course on Aerospace Modeling and Control at Politecnico di Torino. The primary objective is to apply **model-based control design** to orbit and attitude control systems, where models are expressed in terms of **state equations**.
+
+::: {.callout-note}
+## Target Audience
+
+This text is designed for multiple categories of readers:
+
+- **PhD students** specializing in aerospace engineering and control systems
+- **Researchers** in aerospace sciences and control theory
+- **Practicing engineers** in the space industry
+- **Advanced graduate students** with strong backgrounds in dynamics and control
+:::
+
+## Fundamental and Advanced Topics
+
+The book addresses both fundamental and advanced topics, with particular emphasis on:
+
+1. **State equation formulation**
+2. **Feedback design methodologies**
+3. **Uncertainty-based state predictor design**
+4. **Model-based control law development**
+
+These foundational elements prepare readers for specialized control topics including state predictors and advanced control strategies.
+
+## Why the Embedded Model Control Methodology? {#sec-why-emc}
+
+The selected design methodology is **Embedded Model Control (EMC)**, chosen based on extensive experience and proven effectiveness in spacecraft applications.
+
+### The Term "Embedded"
+
+::: {#def-embedded-model}
+## Embedded Model
+
+The term **"embedded"** (not related to embedded computing systems) signifies that any control unit is built around a **discrete-time (DT) state equation** of the plant to be controlled, called the **embedded model**.
+:::
+
+The embedded model operates as a **real-time digital twin** of the spacecraft, running in parallel and synchronously with the actual plant.
+
+### Core Principles of EMC
+
+The EMC methodology is founded on three fundamental principles:
+
+#### Principle 1: Synchronized Real-Time Model {#sec-principle1}
+
+State equations enable implementation of control units that execute a real-time plant model (the embedded model) **in parallel and synchronously** with the plant itself.
+
+**Key Feature**: The **same digital command** sent to the plant (spacecraft) is simultaneously sent to the embedded model.
+
+::: {.callout-important}
+## Command Saturation Prevention
+
+This principle has proven effective in preventing performance degradation under **command saturation** conditions—a critical consideration in spacecraft control where actuator limitations are always present.
+:::
+
+**Mathematical Formulation**:
+
+The embedded model in discrete time is expressed as:
+
+$$
+\begin{aligned}
+\mathbf{x}_m(k+1) &= \mathbf{A}_m \mathbf{x}_m(k) + \mathbf{B}_m \mathbf{u}(k) + \mathbf{B}_w \mathbf{w}(k) \\
+\mathbf{y}_m(k) &= \mathbf{C}_m \mathbf{x}_m(k)
+\end{aligned}
+$$ {#eq-embedded-model}
+
+where:
+
+- $\mathbf{x}_m(k)$: State vector of the embedded model
+- $\mathbf{u}(k)$: Control command (sent to both plant and model)
+- $\mathbf{w}(k)$: Disturbance input
+- $\mathbf{y}_m(k)$: Model output
+
+#### Principle 2: Disturbance Dynamics and Noise Estimation {#sec-principle2}
+
+The embedded model must always be completed with **disturbance dynamics**.
+
+::: {#def-disturbance-dynamics}
+## Disturbance Dynamics
+
+A set of equations capable of storing in their state variables all **past discrepancies** between the plant and the model (collectively called **uncertainty**) that need to be canceled.
+:::
+
+**Disturbance State Equation**:
+
+$$
+\mathbf{x}_d(k+1) = \mathbf{A}_d \mathbf{x}_d(k) + \mathbf{w}(k)
+$$ {#eq-disturbance-dynamics}
+
+The synthesis of disturbance dynamics uses the "design model" to define expected uncertainty classes:
+
+1. **Initial state uncertainty**
+2. **Causal uncertainty** (unknown inputs)
+3. **Parametric uncertainty** (model parameter errors)
+4. **Neglected dynamics** (unmodeled high-frequency modes)
+
+**Noise Design and Estimation**:
+
+The disturbance state must be continuously updated through **noise design and estimation**:
+
+- Input signals $\mathbf{w}(k)$ are formulated as **white noise processes** in a stochastic framework
+- Recovery of input noise is achieved through **correlation with measured model error**:
+
+$$
+e_m(k) = \bar{\mathbf{y}}(k) - \mathbf{y}_m(k)
+$$ {#eq-model-error}
+
+where $\bar{\mathbf{y}}(k)$ represents plant measurements.
+
+**Noise Estimator** (output-to-noise feedback):
+
+$$
+\hat{\mathbf{w}}(k) = \mathbf{L}_w e_m(k)
+$$ {#eq-noise-estimator}
+
+The gain matrix $\mathbf{L}_w$ is designed to **stabilize the closed-loop error system**.
+
+::: {.callout-tip}
+## State Predictor
+
+The combination of embedded model and noise estimator functions as a **closed-loop state predictor**. The state predictor design is considered **uncertainty-based**.
+:::
+
+#### Principle 3: Model-Based Control Law Design {#sec-principle3}
+
+The control law design is **model-based**, using the embedded model state variables and reference variables as ingredients.
+
+**Sequential Design Requirement**:
+
+The design is conditioned by state predictor dynamics and must be developed **without degrading state predictor performance**. This requires:
+
+1. **State predictor design** precedes control law design
+2. **Tracking errors** (embedded model minus reference variables) are **numerically zero**
+
+**Control Law Structure**:
+
+$$
+\mathbf{u}(k) = \mathbf{u}_{ff}(k) + \mathbf{u}_{fb}(k)
+$$ {#eq-control-law}
+
+where:
+
+- $\mathbf{u}_{ff}(k)$: Feedforward component (from reference trajectory)
+- $\mathbf{u}_{fb}(k) = -\mathbf{K} \tilde{\mathbf{x}}(k)$: Feedback component
+- $\tilde{\mathbf{x}}(k) = \mathbf{x}_m(k) - \mathbf{x}_{ref}(k)$: Tracking error
+
+### Design Procedure
+
+The EMC design procedure employs **closed-loop pole placement**, leveraging:
+
+- **Asymptotic sensitivity** ($\tilde{S}$)
+- **Complementary sensitivity** ($\tilde{V}$)
+
+of both the state predictor and overall control loop.
+
+### Validation and Flight Heritage
+
+::: {.callout-note}
+## GOCE Mission Application
+
+The EMC models and algorithms described have been:
+
+- Tested in ground-based instruments and prototypes
+- Applied to the **GOCE satellite** (Gravity Field and Steady-State Ocean Circulation Explorer) Drag-Free and Attitude Control (DFAC) system design
+:::
+
+## Analogical Understanding of EMC
+
+::: {.callout-tip appearance="simple"}
+## Pilot Analogy
+
+EMC methodology works analogously to a pilot using a **digital twin** of their aircraft running in real-time. When the pilot issues a control command, that same command is injected into the digital twin. 
+
+If the real aircraft's instruments (measurements) differ from what the digital twin predicts, that difference (measured model error) is not merely viewed as a simple error, but as a **revealing signal** of unknown disturbances (wind, engine noise, sensor errors).
+
+The system uses this signal to:
+
+1. **Estimate** those unknown disturbances (disturbance dynamics)
+2. **Predict** them one step ahead
+3. Allow the control law to immediately calculate a **corrective command** to cancel them
+
+This ensures robust performance before the disturbance significantly affects the trajectory.
+:::
+
+# Logical Reading Sequence and Book Contents {#sec-logical-sequence}
+
+## Reading Flow
+
+The logical reading sequence is illustrated in @fig-reading-sequence. The diagram is organized as a **top-to-bottom flow**, where a chapter should be read before another if there is a descending link.
+
+```{mermaid}
+#| label: fig-reading-sequence
+#| fig-cap: "Logical reading sequence of the manuscript"
+#| fig-width: 100%
+
+flowchart TD
+    Ch1[Chapter 1: Introduction]
+    Ch2[Chapter 2: Attitude Representation]
+    Ch3[Chapter 3: Orbital Dynamics]
+    Ch4[Chapter 4: Environment]
+    Ch5[Chapter 5: Perturbed Orbital Dynamics]
+    Ch6[Chapter 6: Attitude Kinematics]
+    Ch7[Chapter 7: Attitude Dynamics]
+    Ch8[Chapter 8: Sensors]
+    Ch9[Chapter 9: Actuators]
+    Ch10[Chapter 10: Attitude Determination]
+    Ch11[Chapter 11: Orbital Control]
+    Ch12[Chapter 12: Attitude Control Case Study]
+    Ch13[Chapter 13: Dynamic Systems]
+    Ch14[Chapter 14: EMC Introduction]
+    
+    Ch1 --> Ch2
+    Ch1 --> Ch3
+    Ch1 --> Ch8
+    
+    Ch2 --> Ch6
+    Ch2 --> Ch10
+    
+    Ch3 --> Ch4
+    Ch3 --> Ch5
+    
+    Ch4 --> Ch5
+    Ch4 --> Ch7
+    
+    Ch5 --> Ch11
+    
+    Ch6 --> Ch7
+    Ch6 --> Ch10
+    
+    Ch7 --> Ch12
+    
+    Ch8 --> Ch10
+    Ch8 --> Ch11
+    Ch8 --> Ch12
+    
+    Ch9 --> Ch11
+    Ch9 --> Ch12
+    
+    Ch10 --> Ch12
+    
+    Ch11 --> Ch12
+    
+    Ch12 --> Ch13
+    Ch12 --> Ch14
+    
+    style Ch1 fill:#e1f5ff
+    style Ch13 fill:#fff4e1
+    style Ch14 fill:#fff4e1
+    style Ch12 fill:#ffe1e1
+```
+
+## Content Organization
+
+The manuscript is organized into three main columns:
+
+| Column | Focus | Key Chapters |
+|--------|-------|--------------|
+| **Left** | Orbital dynamics and control | Ch. 3, 4, 5, 11 |
+| **Center** | Sensors/actuators and attitude determination | Ch. 8, 9, 10 |
+| **Right** | Attitude modeling and control | Ch. 2, 6, 7, 12 |
+
+: Content organization by topic area {#tbl-content-organization}
+
+::: {.callout-note}
+## Special Placement
+
+**Chapters 13** (Introduction to Dynamic Systems) and **14** (Introduction to EMC) appear at the end of the book, as they are **outside the classical sequence** of orbit and attitude topics. They provide theoretical foundations that support the methodology throughout.
+:::
+
+## Reference Mission: GOCE Satellite
+
+Most simulated examples and exercises refer to a **hypothetical GOCE satellite**, using parameters, sensors, actuators, and environment that differ from the actual mission.
+
+::: {#def-goce}
+## GOCE Mission
+
+**Gravity Field and Steady-State Ocean Circulation Explorer** (GOCE) was an ESA satellite mission (2009-2013) designed to map Earth's gravity field with unprecedented accuracy. The mission required:
+
+- Drag-free control to maintain ultra-stable orbit
+- High-precision attitude control (arc-second level)
+- Gradiometer instrument for gravity measurements
+:::
+
+# Content Details by Topic Area {#sec-content-details}
+
+## Orbital Models and Control {#sec-orbital-models}
+
+### Chapter 3: Orbital Dynamics
+
+**Classical Topics**:
+- Two-body problem
+- Kepler's equation
+- Orbital parameters (classical orbital elements)
+
+**Extensions**:
+- **Orbital stability** study using Lyapunov's direct method
+- First derivation of **Hill-Clohessy-Wiltshire (HCW)** state equation
+
+::: {#def-hcw}
+## Hill-Clohessy-Wiltshire Equations
+
+Linearized equations of relative motion for spacecraft in close proximity, derived from the two-body problem with perturbation analysis:
+
+$$
+\begin{aligned}
+\ddot{x} - 2n\dot{y} - 3n^2x &= a_x \\
+\ddot{y} + 2n\dot{x} &= a_y \\
+\ddot{z} + n^2z &= a_z
+\end{aligned}
+$$ {#eq-hcw-preview}
+
+where $n$ is the mean motion and $(x,y,z)$ are relative position coordinates in the Local Vertical Local Horizontal (LVLH) frame.
+:::
+
+### Chapter 4: The Environment
+
+**Combines perturbing forces and torques**:
+
+1. **Gravitational perturbations** (J₂, higher harmonics, third-body effects)
+2. **Atmospheric drag**
+3. **Solar radiation pressure**
+4. **Magnetic field interactions**
+
+**Internal forces and torques** (brief introduction):
+- Flexible appendages
+- Liquid sloshing
+
+**Disturbance dynamics method** in terms of stochastic discrete-time equations.
+
+### Chapter 5: Perturbed Orbital Dynamics
+
+**Classical Topics**:
+- Gauss planetary equations
+- Lagrange planetary equations
+
+**Advanced Topics**:
+- **Frozen orbit** definition and design
+- HCW state equation detailed study
+- Feedback stabilization methods
+
+::: {#def-frozen-orbit}
+## Frozen Orbit
+
+An orbit where the eccentricity and argument of periapsis remain approximately constant over time, despite gravitational perturbations. Achieved by selecting specific combinations of orbital elements that balance perturbation effects.
+:::
+
+### Chapter 11: Orbital Control and Prediction
+
+**Most abbreviated orbital topic**, maintaining:
+
+1. **Drag-Free Control (DFC)**
+   - Compensates atmospheric drag
+   - Essential for gravity field measurement missions
+   - Maintains ultra-stable orbital conditions
+
+2. **Orbital Quaternion Prediction**
+   - Uses GPS/GNSS measurements
+   - Provides attitude reference frame
+   - Enables orbit-relative attitude control
+
+**Omitted**: Orbital estimation algorithms (Kalman filtering for orbit determination)
+
+## Attitude Models and Control {#sec-attitude-models}
+
+### Chapter 6: Attitude Kinematics
+
+**Core of the manuscript's attitude treatment**
+
+**Three classical methods**:
+1. Attitude matrix (Direction Cosine Matrix)
+2. Euler angles
+3. Quaternions
+
+**Focus Areas**:
+
+**Error Quaternion Kinematics** (Continuous and Discrete Time):
+
+$$
+\dot{\mathbf{q}}_e = \frac{1}{2}\boldsymbol{\Omega}(\boldsymbol{\omega}_e)\mathbf{q}_e
+$$ {#eq-error-quat-kinematics-preview}
+
+**Stabilizing Feedback Systems**:
+
+| Type | Characteristics | Application |
+|------|----------------|-------------|
+| Proportional | Simple, fast response | Coarse pointing |
+| PI (Proportional-Integral) | Eliminates steady-state error | Fine pointing |
+| Dynamic | Includes rate damping | Vibration suppression |
+| Multi-integrative chain | High-order tracking | Precision maneuvers |
+
+: Feedback system types {#tbl-feedback-types}
+
+**Stability Analysis**: Lyapunov method for nonlinear attitude systems
+
+**State Predictor Design**:
+- Driven by **gyroscope** and **star tracker** data
+- Compared with Kalman filter approaches
+- Uncertainty-based design following EMC principles
+
+### Chapter 7: Attitude Dynamics
+
+**Fundamental Equations**:
+
+**Euler's Equation**:
+
+$$
+\mathbf{J}\dot{\boldsymbol{\omega}} + \boldsymbol{\omega} \times \mathbf{J}\boldsymbol{\omega} = \mathbf{T}_{ext}
+$$ {#eq-euler-equation-preview}
+
+where:
+- $\mathbf{J}$: Moment of inertia tensor
+- $\boldsymbol{\omega}$: Angular velocity vector
+- $\mathbf{T}_{ext}$: External torques
+
+**Topics Covered**:
+
+1. **Closed-loop attitude dynamics**
+2. **Torque-free rigid body motion**
+   - Stability analysis
+   - Energy ellipsoid
+   - Polhode and herpolhode
+3. **Environmental torques**:
+   - Gravity gradient torque
+   - Aerodynamic torque
+4. **Classical control problems**:
+   - Active nutation damping
+   - Magnetic detumbling
+   - Reaction wheel control
+
+### Chapter 12: Attitude Control - Case Study
+
+**Comprehensive DFAC design** for hypothetical GOCE-like mission.
+
+**Central Element**: **Mission State Predictor**
+- Single unified predictor
+- Adapts to five different control modes
+- Ensures smooth mode transitions
+
+**Control Modes** (typical spacecraft sequence):
+
+1. **Safe Mode**: Magnetic detumbling
+2. **Coarse Pointing**: Sun acquisition
+3. **Fine Pointing**: Star tracker acquisition
+4. **Science Mode**: High-precision attitude control
+5. **Drag-Free Mode**: Combined orbit and attitude control
+
+## Technology and Attitude Determination {#sec-technology}
+
+### Chapter 8: Sensors
+
+**Comprehensive sensor treatment** covering operational principles, models, and error characteristics.
+
+**Sensor Categories**:
+
+#### Inertial Navigation Sensors
+
+1. **Accelerometers**
+   - Principle: Measure specific force
+   - Applications: Drag-free control, thrust monitoring
+   - Error sources: Bias, scale factor, noise
+
+2. **Gyroscopes** (Rate sensors)
+   - Types: Mechanical, fiber-optic, MEMS
+   - Principle: Measure angular rate
+   - Error model: Bias drift, random walk, scale factor
+
+3. **GNSS/GPS Receivers**
+   - Provides: Position, velocity
+   - Accuracy: Meter-level to centimeter-level
+   - Applications: Orbital determination, time synchronization
+
+#### Attitude Sensors
+
+4. **Sun Sensors**
+   - Principle: Measure sun direction
+   - Types: Analog (coarse), digital (fine)
+   - Accuracy: 0.5° to 0.01°
+
+5. **Earth Horizon Sensors**
+   - Principle: Detect Earth limb
+   - Applications: Nadir pointing
+   - Limitations: Altitude-dependent accuracy
+
+6. **Star Trackers**
+   - Principle: Identify star patterns
+   - Accuracy: Arc-seconds
+   - Critical for: Fine attitude determination
+   - Star catalogs: Hipparcos, Tycho
+
+7. **Magnetometers**
+   - Measure: Earth's magnetic field
+   - Applications: Coarse attitude, magnetic torquer control
+   - Limitations: Decreasing field strength with altitude
+
+**Special Focus**: **Null-measurement sensors**
+- Problem formulation for sensors requiring active control
+- Control solutions for maintaining null conditions
+- Examples: Accelerometers in drag-free mode
+
+### Chapter 9: Actuators
+
+**Actuation Technologies** for orbit and attitude control.
+
+#### Propulsion Systems
+
+**Thrust Vector Analysis**: Walsh vector method for minimum-size thruster array design
+
+::: {.callout-important}
+## Walsh Vector Method
+
+A systematic approach to determine the **minimum number and optimal placement** of thrusters required to achieve arbitrary force and torque commands within specified bounds.
+
+**Key advantages**:
+- Guarantees complete controllability
+- Minimizes system complexity
+- Optimizes propellant usage
+:::
+
+#### Momentum Exchange Actuators
+
+1. **Reaction Wheels (RW)**
+   - Principle: Conservation of angular momentum
+   - Provides: Pure torque (no mass expenditure)
+   - Limitations: Momentum saturation
+   - Applications: Continuous attitude control
+
+2. **Control Moment Gyroscopes (CMG)**
+   - Principle: Gyroscopic precession
+   - Advantage: High torque amplification
+   - Challenge: Singularity avoidance
+   - Applications: Large spacecraft, space stations
+
+#### Magnetic Actuators
+
+3. **Magnetic Torquers (MTR)**
+   - Principle: Interaction with Earth's magnetic field
+   - Types: Coils, magnetic rods
+   - Limitations: Direction constraint (perpendicular to field)
+   - Applications: Momentum unloading, detumbling
+
+### Chapter 10: Attitude Determination
+
+**Focus**: **Static (pointwise) attitude determination** from simultaneous celestial direction measurements.
+
+#### The Wahba Problem
+
+::: {#def-wahba-problem}
+## Wahba's Problem
+
+Given $n$ unit vector observations $\mathbf{b}_i$ in the body frame and corresponding reference vectors $\mathbf{r}_i$ in the inertial frame, find the rotation matrix $\mathbf{R}$ that minimizes:
+
+$$
+J(\mathbf{R}) = \frac{1}{2}\sum_{i=1}^{n} w_i \|\mathbf{b}_i - \mathbf{R}\mathbf{r}_i\|^2
+$$ {#eq-wahba-problem}
+
+where $w_i$ are measurement weights.
+
+This is a **maximum likelihood estimation** problem for attitude determination.
+:::
+
+**Quaternion-Based Algorithms**:
+
+1. **Q-Method** (Davenport, 1968)
+   - Formulates problem as eigenvalue problem
+   - Optimal solution via largest eigenvalue
+   - Computationally intensive
+
+2. **QUEST Algorithm** (Shuster & Oh, 1981)
+   - Quaternion Estimator
+   - Fast iterative solution
+   - Most widely used in practice
+
+3. **ESOQ Algorithm** (Mortari, 1997)
+   - Estimator of the Optimal Quaternion
+   - Closed-form solution
+   - No iterations required
+
+**Classical Algorithm**:
+
+4. **TRIAD** (Three-Axis Attitude Determination)
+   - Uses exactly two vector measurements
+   - Deterministic (non-optimal)
+   - Fast computation
+   - Baseline for comparison
+
+**Angular Rate Determination**:
+- Derives angular velocity from sequential direction measurements
+- Useful when rate sensors unavailable or degraded
+
+## Theoretical Foundations {#sec-theoretical-foundations}
+
+### Chapter 13: Introduction to Dynamic Systems
+
+**Provides theoretical underpinnings** for control design methodology.
+
+**Key Topics**:
+
+1. **State-Space Representation**
+   $$
+   \begin{aligned}
+   \dot{\mathbf{x}}(t) &= \mathbf{A}\mathbf{x}(t) + \mathbf{B}\mathbf{u}(t) \\
+   \mathbf{y}(t) &= \mathbf{C}\mathbf{x}(t) + \mathbf{D}\mathbf{u}(t)
+   \end{aligned}
+   $$ {#eq-state-space-ct}
+
+2. **Stability Concepts and Criteria**
+   - Lyapunov stability
+   - Asymptotic stability
+   - Exponential stability
+
+3. **Controllability and Observability**
+   - Fundamental system properties
+   - Kalman rank conditions
+
+4. **Ideal Control Law**
+   - State feedback
+   - Disturbance rejection
+
+5. **State Predictor and Real Control**
+   - Observer design
+   - Separation principle
+
+6. **Random Processes and Estimation**
+   - Stochastic modeling
+   - Kalman filtering foundations
+
+### Chapter 14: Introduction to Embedded Model Control
+
+**Comprehensive EMC framework** with detailed theoretical development.
+
+**Core Topics**:
+
+1. **EMC Principles** (detailed exposition of Principles 1-3)
+
+2. **Models and Uncertainty**
+   - Design model vs. embedded model
+   - Uncertainty classification
+   - Robustness analysis
+
+3. **State Predictor Design Versus Uncertainty**
+   - Uncertainty-based design
+   - Noise correlation methods
+   - Predictor stability
+
+4. **Control Law Design**
+   - Sequential design procedure
+   - Pole placement techniques
+   - Performance specifications
+
+# Omitted Topics {#sec-omitted-topics}
+
+Due to time and space constraints, several significant topics have been omitted from this manuscript.
+
+## Environmental Modeling
+
+- **Solar eclipse conditions** for Earth satellites
+  - Eclipse geometry
+  - Thermal effects
+  - Power subsystem implications
+
+## Flexible Dynamics
+
+- **Systematic treatment** of attitude control problems related to:
+  - **Flexible appendages** (solar panels, antennas)
+  - **Liquid sloshing** in propellant tanks
+  - Modal analysis and control-structure interaction
+
+## Attitude Reference Generation
+
+- **Most types of attitude reference generation**, except orbital frames
+  - Ground target tracking
+  - Inertial pointing modes
+  - Celestial object tracking
+  - Scanning patterns
+
+## Autonomous Operations
+
+### Supervisory Control System
+
+**Omitted Design**:
+- **Mode scheduling and switching** for different orbit and attitude control modes
+- State machine implementation
+- Mode transition logic
+- Safeguarding mechanisms
+
+### Fault Management
+
+- **Fault Detection, Isolation, and Recovery (FDIR)**
+  - Fault detection algorithms
+  - Isolation strategies
+  - Recovery procedures
+  - Redundancy management
+
+## Advanced Estimation Methods
+
+### Recursive Attitude Determination
+
+- **Extended Kalman Filter (EKF)** methods for attitude determination
+- Multiplicative EKF (MEKF)
+- Unscented Kalman Filter (UKF)
+- Particle filters
+
+**Note**: Chapter 6 includes predictor design driven by gyroscope and star tracker data, compared with Kalman filter approaches, but does not cover full EKF implementation.
+
+### Sensor Calibration
+
+- **Off-line calibration** procedures:
+  - Magnetometer calibration (hard/soft iron compensation)
+  - Star tracker calibration (lens distortion, mounting alignment)
+  - Gyroscope calibration (bias, scale factor, alignment)
+
+- **Initialization algorithms**:
+  - Lost-in-space algorithms for star tracker initialization
+  - Initial attitude acquisition without a priori knowledge
+
+## Navigation Algorithms
+
+### GPS/GNSS Processing
+
+- **Legacy GPS algorithms** (ignored)
+  - Pseudorange processing
+  - Carrier phase processing
+  - Differential GPS
+
+**Note**: Only **aggregated range and range-rate error properties** are employed in orbital quaternion prediction (Chapter 11).
+
+## Propulsion Applications
+
+### Thruster Control
+
+- **Explicit use of ON-OFF propulsion**
+  - Pulse-width modulation
+  - Bang-bang control
+  - Minimum impulse bit constraints
+
+**Note**: Detailed thruster modeling is provided in Chapter 9, but explicit ON-OFF control algorithms are not developed.
+
+## Summary of Omissions
+
+::: {.callout-warning}
+## Scope Limitations
+
+While these topics are important in complete spacecraft GNC systems, their omission allows:
+
+1. **Focused treatment** of core EMC methodology
+2. **Manageable manuscript length**
+3. **Deep coverage** of fundamental attitude and orbit control
+4. **Practical examples** without overwhelming complexity
+
+Readers interested in omitted topics should consult specialized references provided in the bibliography.
+:::
+
+# Summary {#sec-chapter-summary}
+
+This introductory chapter has established:
+
+1. **Objectives and Rationale**
+   - Model-based control design for spacecraft
+   - Target audience and prerequisites
+   - Educational approach
+
+2. **EMC Methodology**
+   - Three fundamental principles
+   - Synchronized real-time modeling
+   - Disturbance dynamics and estimation
+   - Sequential model-based control design
+
+3. **Manuscript Organization**
+   - Logical reading sequence
+   - Three-column content structure
+   - GOCE mission as reference
+
+4. **Content Overview**
+   - Orbital models and control (Chapters 3-5, 11)
+   - Attitude models and control (Chapters 6-7, 12)
+   - Technology and determination (Chapters 8-10)
+   - Theoretical foundations (Chapters 13-14)
+
+5. **Scope Definition**
+   - Included comprehensive topics
+   - Explicitly omitted advanced topics
+   - Clear boundaries for manuscript focus
+
+## Key Takeaways
+
+::: {.callout-tip}
+## Essential Concepts
+
+1. **EMC is a systematic methodology** for spacecraft control design that explicitly handles model uncertainty
+
+2. **The embedded model** runs in parallel with the spacecraft, receiving identical commands
+
+3. **Disturbance dynamics** capture all discrepancies between model and reality
+
+4. **Sequential design** ensures state predictor performance is not degraded by control law
+
+5. **Flight heritage** validates the approach through GOCE mission application
+:::
+
+# Exercises {.unnumbered}
+
+::: {#exr-emc-principle}
+**EMC Principle Understanding**: Explain in your own words why the "embedded" model receives the same digital command as the spacecraft plant. What would happen if the model received different commands?
+:::
+
+::: {#exr-disturbance-modeling}
+**Disturbance Classification**: List and categorize at least five sources of uncertainty in a low Earth orbit satellite attitude control system. Classify each as initial state, causal, parametric, or neglected dynamics uncertainty.
+:::
+
+::: {#exr-reading-sequence}
+**Reading Path**: A student wants to quickly learn about star tracker-based attitude determination without detailed dynamics background. Propose a minimal reading path through the chapters, justifying each chapter's inclusion.
+:::
+
+::: {#exr-frozen-orbit}
+**Frozen Orbit Application**: Research and explain why frozen orbits are particularly important for Earth observation missions. What orbital elements must be controlled?
+:::
+
+::: {#exr-wahba-comparison}
+**Algorithm Comparison**: Compare the computational complexity of TRIAD versus QUEST algorithms. Under what conditions would you choose each?
+:::
+
+::: {#exr-emc-analogy}
+**Methodology Analogy**: Create your own analogy (different from the pilot analogy) to explain the EMC methodology to a colleague from a different engineering discipline.
+:::
+
+# References {.unnumbered}
+
+::: {#refs}
+:::
+
+---
+
+**Next Chapter**: [Chapter 2: Attitude Representation](#sec-attitude-representation)

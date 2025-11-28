@@ -1,0 +1,370 @@
+---
+title: "Abbreviations"
+subtitle: "Section 1.3"
+---
+
+# Abbreviations {#sec-abbreviations}
+
+This section provides a comprehensive list of abbreviations used throughout the manuscript, organized by category for easy reference.
+
+## General Terms and Organizations {#sec-abbrev-general}
+
+| Abbreviation | Full Term | Notes |
+|--------------|-----------|-------|
+| ADCS | Attitude Determination and Control System | Also AOCS (Attitude and Orbit Control System) |
+| CoM | Center of Mass | Also CoG (Center of Gravity) |
+| CT | Continuous Time | Differential equations |
+| DT | Discrete Time | Difference equations |
+| EMC | Embedded Model Control | Primary methodology of this manuscript |
+| ESA | European Space Agency | - |
+| GNC | Guidance, Navigation, and Control | Complete spacecraft control system |
+| LEO | Low Earth Orbit | Typically 200-2000 km altitude |
+| NASA | National Aeronautics and Space Administration | US space agency |
+| S/C | Spacecraft | - |
+| TBD | To Be Determined | Placeholder value |
+| TBC | To Be Confirmed | Requires verification |
+
+: General abbreviations {#tbl-abbrev-general}
+
+## Reference Frames and Coordinate Systems {#sec-abbrev-frames}
+
+| Abbreviation | Full Term | Description |
+|--------------|-----------|-------------|
+| BCBF | Body-Centered Body-Fixed | Body frame origin at CoM |
+| ECI | Earth-Centered Inertial | Inertial frame for Earth orbit |
+| ECEF | Earth-Centered Earth-Fixed | Rotates with Earth |
+| HCI | Heliocentric Inertial | Sun-centered inertial frame |
+| ICRF | International Celestial Reference Frame | Fundamental inertial frame |
+| LVLH | Local Vertical Local Horizontal | Also called orbital frame |
+| NED | North-East-Down | Local geographic frame |
+| RSW | Radial-Along track-Cross track | Another orbital frame notation |
+| RTN | Radial-Tangential-Normal | Alternative orbital frame |
+
+: Reference frame abbreviations {#tbl-abbrev-frames}
+
+::: {#def-lvlh}
+## LVLH Frame
+
+**Local Vertical Local Horizontal** frame has:
+- **x-axis**: Radial (nadir direction, local vertical)
+- **y-axis**: Along-track (velocity direction, local horizontal)
+- **z-axis**: Cross-track (normal to orbital plane)
+
+Also called **RSW** (Radial, Along-track [S=in-track], Cross-track [W=out-of-plane]).
+:::
+
+## Missions and Satellites {#sec-abbrev-missions}
+
+| Abbreviation | Full Term | Mission Type/Period |
+|--------------|-----------|---------------------|
+| GOCE | Gravity field and steady-state Ocean Circulation Explorer | ESA, 2009-2013 |
+| GRACE | Gravity Recovery and Climate Experiment | NASA/DLR, 2002-2017 |
+| GRACE-FO | GRACE Follow-On | NASA/GFZ, 2018-present |
+| HST | Hubble Space Telescope | NASA/ESA, 1990-present |
+| ISS | International Space Station | Multi-agency, 1998-present |
+| JWST | James Webb Space Telescope | NASA/ESA/CSA, 2021-present |
+| LISA | Laser Interferometer Space Antenna | ESA, planned |
+
+: Mission and satellite abbreviations {#tbl-abbrev-missions}
+
+::: {.callout-note}
+## GOCE Reference Mission
+
+This manuscript uses a **hypothetical GOCE satellite** as the primary reference for examples and simulations. Parameters may differ from the actual mission for pedagogical purposes.
+
+**Actual GOCE Mission**:
+- Launch: March 17, 2009
+- End: November 11, 2013
+- Altitude: ~255 km (ultra-low)
+- Primary instrument: Gradiometer
+- Key requirement: Drag-free control
+:::
+
+## Sensors {#sec-abbrev-sensors}
+
+| Abbreviation | Full Term | Function |
+|--------------|-----------|----------|
+| ACC | Accelerometer | Measures specific force |
+| APS | Active Pixel Sensor | Star tracker technology |
+| CCD | Charge-Coupled Device | Star tracker detector |
+| CSS | Coarse Sun Sensor | Low-accuracy sun direction |
+| DFACS | Drag-Free and Attitude Control System | Integrated system |
+| DSS | Digital Sun Sensor | High-accuracy sun direction |
+| ESH | Earth Sensor Head | Horizon sensor component |
+| FEEP | Field Emission Electric Propulsion | Micro-thruster technology |
+| FOG | Fiber Optic Gyroscope | Rate sensor type |
+| FOV | Field of View | Sensor viewing angle |
+| FSS | Fine Sun Sensor | High-accuracy variant |
+| GNSS | Global Navigation Satellite System | Generic term for GPS, Galileo, etc. |
+| GPS | Global Positioning System | US GNSS |
+| GRU | Gyro Reference Unit | Gyroscope assembly |
+| IES | Infrared Earth Sensor | Horizon sensor using IR |
+| IMU | Inertial Measurement Unit | Acc + Gyro assembly |
+| IRU | Inertial Reference Unit | High-grade IMU |
+| MEMS | Micro-Electro-Mechanical Systems | Miniaturized sensor technology |
+| MGM | Magnetometer | Magnetic field sensor |
+| RLG | Ring Laser Gyroscope | High-accuracy gyroscope |
+| STR | Star Tracker | Attitude sensor using stars |
+| TAM | Three-Axis Magnetometer | Complete magnetic field vector |
+
+: Sensor abbreviations {#tbl-abbrev-sensors}
+
+## Actuators {#sec-abbrev-actuators}
+
+| Abbreviation | Full Term | Function |
+|--------------|-----------|----------|
+| ACS | Attitude Control System | - |
+| CMG | Control Moment Gyroscope | Momentum exchange device |
+| DGCMG | Double Gimbal CMG | Two-axis gimbal |
+| FEEP | Field Emission Electric Propulsion | Micro-newton thruster |
+| IPT | Ion Propulsion Thruster | Electric propulsion |
+| MTB | Magnetic Torque Bar | Rod-type magnetic actuator |
+| MTQ | Magnetic Torquer | Generic magnetic actuator |
+| MTR | Magnetic Torque Rod | Alternative to MTB |
+| RCS | Reaction Control System | Thruster system |
+| RW | Reaction Wheel | Momentum storage device |
+| SADM | Solar Array Drive Mechanism | Solar panel actuator |
+| SGCMG | Single Gimbal CMG | One-axis gimbal |
+| VSCMG | Variable Speed CMG | RW + CMG hybrid |
+
+: Actuator abbreviations {#tbl-abbrev-actuators}
+
+::: {#def-momentum-exchange}
+## Momentum Exchange Devices
+
+Actuators that produce torque through **conservation of angular momentum**:
+
+- **Reaction Wheel (RW)**: Variable-speed spinning wheel
+- **Control Moment Gyroscope (CMG)**: Gimbaled constant-speed wheel
+- **Momentum Wheel**: Biased reaction wheel (non-zero nominal speed)
+
+Advantages: No propellant consumption  
+Disadvantage: Momentum saturation requires periodic desaturation
+:::
+
+## Algorithms and Methods {#sec-abbrev-algorithms}
+
+| Abbreviation | Full Term | Application |
+|--------------|-----------|-------------|
+| AD | Attitude Determination | Estimation of attitude from measurements |
+| ESOQ | Estimator of the Optimal Quaternion | Fast Wahba solution |
+| EKF | Extended Kalman Filter | Nonlinear state estimation |
+| FDIR | Fault Detection, Isolation, and Recovery | Autonomous fault management |
+| FOAM | Fast Optimal Attitude Matrix | Wahba algorithm variant |
+| HCW | Hill-Clohessy-Wiltshire | Relative motion equations |
+| LQG | Linear Quadratic Gaussian | Optimal control + estimation |
+| LQR | Linear Quadratic Regulator | Optimal state feedback |
+| MEKF | Multiplicative Extended Kalman Filter | Attitude-specific EKF |
+| PD | Proportional-Derivative | Control law type |
+| PI | Proportional-Integral | Control law type |
+| PID | Proportional-Integral-Derivative | Complete control law |
+| QUEST | Quaternion Estimator | Wahba problem solution |
+| SVD | Singular Value Decomposition | Matrix factorization |
+| TRIAD | Three-Axis Attitude Determination | Deterministic two-vector method |
+| UKF | Unscented Kalman Filter | Alternative to EKF |
+
+: Algorithm abbreviations {#tbl-abbrev-algorithms}
+
+## Control and Estimation Terms {#sec-abbrev-control}
+
+| Abbreviation | Full Term | Description |
+|--------------|-----------|-------------|
+| BIBO | Bounded-Input Bounded-Output | Stability criterion |
+| BW | Bandwidth | Frequency response measure |
+| CS | Complementary Sensitivity | Transfer function T = 1-S |
+| CL | Closed Loop | Feedback system |
+| DFC | Drag-Free Control | Orbital control compensating drag |
+| DFAC | Drag-Free and Attitude Control | Combined system |
+| FDI | Fault Detection and Isolation | Diagnosis subsystem |
+| ISE | Integral Square Error | Performance metric |
+| ITAE | Integral Time-weighted Absolute Error | Performance metric |
+| LHP | Left Half Plane | Stable pole region (CT) |
+| LTI | Linear Time-Invariant | System class |
+| MIMO | Multiple-Input Multiple-Output | System with multiple I/O |
+| OL | Open Loop | No feedback |
+| PM | Phase Margin | Stability measure |
+| RHP | Right Half Plane | Unstable pole region (CT) |
+| RMS | Root Mean Square | Statistical measure |
+| SISO | Single-Input Single-Output | Scalar system |
+| SNR | Signal-to-Noise Ratio | Measurement quality |
+| SS | State Space | System representation |
+| TF | Transfer Function | Input-output relationship |
+| ZOH | Zero-Order Hold | D/A conversion model |
+
+: Control theory abbreviations {#tbl-abbrev-control}
+
+## Orbital Mechanics {#sec-abbrev-orbit}
+
+| Abbreviation | Full Term | Description |
+|--------------|-----------|-------------|
+| AoP | Argument of Periapsis | Classical orbital element $\omega$ |
+| COE | Classical Orbital Elements | $(a, e, i, \Omega, \omega, \nu)$ |
+| GEO | Geostationary Orbit | 35,786 km altitude, zero inclination |
+| GTO | Geostationary Transfer Orbit | Elliptical transfer orbit |
+| LEO | Low Earth Orbit | 200-2000 km altitude |
+| MA | Mean Anomaly | Averaged angular position |
+| MEO | Medium Earth Orbit | 2,000-35,786 km (GPS altitude) |
+| RAAN | Right Ascension of Ascending Node | Classical element $\Omega$ |
+| SMA | Semi-Major Axis | Orbit size parameter $a$ |
+| SSO | Sun-Synchronous Orbit | Orbit plane tracks sun |
+| TA | True Anomaly | Actual angular position $\nu$ |
+| TLE | Two-Line Element | Orbital element format |
+
+: Orbital mechanics abbreviations {#tbl-abbrev-orbit}
+
+::: {#def-sso}
+## Sun-Synchronous Orbit (SSO)
+
+An orbit where the **orbital plane precesses** at the same rate as Earth's orbit around the sun, maintaining constant sun angle.
+
+**Requirements**:
+- Inclination: ~98° (retrograde)
+- Altitude: Typically 600-800 km
+- RAAN precession: ~0.9856°/day
+
+**Applications**: Earth observation, reconnaissance
+:::
+
+## Physical Quantities {#sec-abbrev-physics}
+
+| Abbreviation | Full Term | Typical Units |
+|--------------|-----------|---------------|
+| AoA | Angle of Attack | degrees or radians |
+| AR | Allan Variance | (unit)²·s |
+| ARW | Angular Random Walk | rad/√s or °/√h |
+| $C_D$ | Drag Coefficient | dimensionless |
+| $C_L$ | Lift Coefficient | dimensionless |
+| GM | Gravitational Parameter ($\mu$) | km³/s² |
+| $I_{sp}$ | Specific Impulse | seconds |
+| MoI | Moment of Inertia | kg·m² |
+| PoI | Product of Inertia | kg·m² |
+| PSD | Power Spectral Density | (unit)²/Hz |
+| RW | Random Walk | Various |
+| SD | Spectral Density | unit/√Hz |
+| SRP | Solar Radiation Pressure | N/m² |
+| VRW | Velocity Random Walk | (m/s)/√s |
+
+: Physical quantity abbreviations {#tbl-abbrev-physics}
+
+## Mathematical and Computational {#sec-abbrev-math}
+
+| Abbreviation | Full Term | Context |
+|--------------|-----------|---------|
+| CG | Conjugate Gradient | Optimization method |
+| CPU | Central Processing Unit | Computational hardware |
+| DCM | Direction Cosine Matrix | Rotation matrix |
+| DOF | Degrees of Freedom | System complexity measure |
+| FFT | Fast Fourier Transform | Spectral analysis |
+| FPU | Floating Point Unit | Hardware component |
+| LU | Lower-Upper | Matrix factorization |
+| MRP | Modified Rodrigues Parameters | Attitude representation |
+| ODE | Ordinary Differential Equation | Mathematical model |
+| PDE | Partial Differential Equation | Distributed system |
+| QR | QR Decomposition | Matrix factorization |
+| RAM | Random Access Memory | Computer memory |
+| ROM | Read-Only Memory | Permanent storage |
+| SVD | Singular Value Decomposition | Matrix analysis |
+
+: Mathematical abbreviations {#tbl-abbrev-math}
+
+## Standards and Documentation {#sec-abbrev-standards}
+
+| Abbreviation | Full Term | Issuing Organization |
+|--------------|-----------|---------------------|
+| CCSDS | Consultative Committee for Space Data Systems | International |
+| ECSS | European Cooperation for Space Standardization | ESA |
+| IEEE | Institute of Electrical and Electronics Engineers | US |
+| ISO | International Organization for Standardization | International |
+| ITU | International Telecommunication Union | UN agency |
+| MIL-STD | Military Standard | US Department of Defense |
+| NASA-STD | NASA Standard | NASA |
+| SMAD | Space Mission Analysis and Design | Reference book |
+
+: Standards abbreviations {#tbl-abbrev-standards}
+
+## Miscellaneous {#sec-abbrev-misc}
+
+| Abbreviation | Full Term | Notes |
+|--------------|-----------|-------|
+| AIT | Assembly, Integration, and Testing | Spacecraft production phase |
+| CDR | Critical Design Review | Project milestone |
+| EMC | Electromagnetic Compatibility | Not to be confused with Embedded Model Control |
+| EMI | Electromagnetic Interference | - |
+| EOL | End of Life | Mission termination |
+| LEOP | Launch and Early Orbit Phase | Initial operations |
+| MLI | Multi-Layer Insulation | Thermal blanket |
+| PDR | Preliminary Design Review | Project milestone |
+| TBC | To Be Confirmed | Design placeholder |
+| TBD | To Be Determined | Design placeholder |
+| TRL | Technology Readiness Level | Maturity scale (1-9) |
+| ΔV | Delta-V | Velocity change capability |
+
+: Miscellaneous abbreviations {#tbl-abbrev-misc}
+
+## Usage Notes {#sec-abbrev-usage}
+
+::: {.callout-important}
+## Abbreviation Conventions
+
+1. **First use**: Spell out full term followed by abbreviation in parentheses
+   - Example: "The Attitude Determination and Control System (ADCS) uses..."
+   
+2. **Subsequent uses**: Use abbreviation only
+   - Example: "The ADCS performance depends on..."
+
+3. **Context clarity**: If many chapters separate uses, consider re-defining
+
+4. **Plurals**: Add lowercase 's' to abbreviation
+   - Example: "Multiple RWs" (Reaction Wheels)
+
+5. **Possessive**: Add apostrophe-s
+   - Example: "The ADCS's performance" or "The ADCS' performance"
+:::
+
+## Quick Reference Table {#sec-abbrev-quick}
+
+Most frequently used abbreviations in this manuscript:
+
+| Abbrev | Term | Abbrev | Term |
+|--------|------|--------|------|
+| ADCS | Attitude Determination and Control System | RW | Reaction Wheel |
+| COE | Classical Orbital Elements | S/C | Spacecraft |
+| CT | Continuous Time | SD | Spectral Density |
+| DCM | Direction Cosine Matrix | SISO | Single-Input Single-Output |
+| DFC | Drag-Free Control | SMA | Semi-Major Axis |
+| DFAC | Drag-Free and Attitude Control | SNR | Signal-to-Noise Ratio |
+| DT | Discrete Time | SSO | Sun-Synchronous Orbit |
+| ECI | Earth-Centered Inertial | STR | Star Tracker |
+| EKF | Extended Kalman Filter | TF | Transfer Function |
+| EMC | Embedded Model Control | TRIAD | Three-Axis Attitude Determination |
+| GOCE | Gravity field and steady-state Ocean Circulation Explorer | UKF | Unscented Kalman Filter |
+| GNC | Guidance, Navigation, and Control | |
+| HCW | Hill-Clohessy-Wiltshire | | |
+| LEO | Low Earth Orbit | | |
+| LVLH | Local Vertical Local Horizontal | | |
+| MEKF | Multiplicative Extended Kalman Filter | | |
+| PSD | Power Spectral Density | | |
+| QUEST | Quaternion Estimator | | |
+
+: Quick reference - most common abbreviations {#tbl-abbrev-quick-ref}
+
+## Summary
+
+This comprehensive abbreviation list serves as:
+
+1. **Reference guide** throughout the manuscript
+2. **Translation aid** for interdisciplinary readers
+3. **Standard terminology** alignment with aerospace literature
+4. **Quick lookup** for unfamiliar acronyms
+
+::: {.callout-tip}
+## Bookmark This Section
+
+Keep this abbreviation list readily accessible while reading. Most technical chapters introduce domain-specific abbreviations that build upon this foundation.
+:::
+
+---
+
+**End of Chapter 1**
+
+**Next**: [Chapter 2: Attitude Representation](../02-attitude-representation/index.qmd)

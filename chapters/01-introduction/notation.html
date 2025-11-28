@@ -1,0 +1,1242 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.26">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Notation Rules and Tables</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="notation_files/libs/clipboard/clipboard.min.js"></script>
+<script src="notation_files/libs/quarto-html/quarto.js" type="module"></script>
+<script src="notation_files/libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="notation_files/libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="notation_files/libs/quarto-html/popper.min.js"></script>
+<script src="notation_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="notation_files/libs/quarto-html/anchor.min.js"></script>
+<link href="notation_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="notation_files/libs/quarto-html/quarto-syntax-highlighting-587c61ba64f3a5504c4d52d930310e48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="notation_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="notation_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="notation_files/libs/bootstrap/bootstrap-49be455ab71eec21615579defd607936.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="fullcontent quarto-light">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Notation Rules and Tables</h1>
+<p class="subtitle lead">Section 1.2</p>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="sec-notation" class="level1">
+<h1>Notation Rules and Tables</h1>
+<p>Consistent mathematical notation is essential for clarity in spacecraft dynamics and control. This section establishes comprehensive notation rules used throughout the manuscript.</p>
+<section id="sec-notation-rules" class="level2">
+<h2 class="anchored" data-anchor-id="sec-notation-rules">Notation Rules</h2>
+<section id="vector-notation" class="level3">
+<h3 class="anchored" data-anchor-id="vector-notation">Vector Notation</h3>
+<div id="def-vector-notation" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 1 (Vector Representation)</strong></span> &nbsp;</p>
+<ul>
+<li><strong>Free 3D vectors</strong> are denoted with arrow symbols: <span class="math inline">\(\vec{v}\)</span></li>
+<li><strong>Coordinate vectors</strong> are written in <strong>bold</strong>: <span class="math inline">\(\mathbf{v}\)</span></li>
+<li><strong>Reference frame subscript</strong> may be appended: <span class="math inline">\(\mathbf{v}_i\)</span> (vector in frame <span class="math inline">\(i\)</span>)</li>
+</ul>
+</div>
+<p><strong>Example</strong>: <span class="math display">\[
+\vec{v} \quad \text{(geometric vector)} \quad \longrightarrow \quad \mathbf{v}_{\mathcal{B}} = \begin{bmatrix} v_1 \\ v_2 \\ v_3 \end{bmatrix} \quad \text{(coordinates in frame } \mathcal{B}\text{)}
+\]</span></p>
+</section>
+<section id="column-vector-convention" class="level3">
+<h3 class="anchored" data-anchor-id="column-vector-convention">Column Vector Convention</h3>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>Default Orientation
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Coordinate vectors are <strong>column vectors</strong> by default. The non-standard inline notation:</p>
+<p><span class="math display">\[\mathbf{v} = [v_1, v_2, v_3]\]</span></p>
+<p>represents a <strong>column</strong> 3D vector, equivalent to:</p>
+<p><span class="math display">\[\mathbf{v} = \begin{bmatrix} v_1 \\ v_2 \\ v_3 \end{bmatrix}\]</span></p>
+</div>
+</div>
+</section>
+<section id="quaternion-notation" class="level3">
+<h3 class="anchored" data-anchor-id="quaternion-notation">Quaternion Notation</h3>
+<p>Quaternions can be represented in two equivalent forms:</p>
+<p><strong>Matrix form</strong>: <span id="eq-quat-notation-matrix"><span class="math display">\[
+\mathbf{q} = \begin{bmatrix} q_0 \\ \mathbf{q}_v \end{bmatrix} = \begin{bmatrix} q_0 \\ q_1 \\ q_2 \\ q_3 \end{bmatrix}
+\tag{1}\]</span></span></p>
+<p><strong>Inline notation</strong>: <span id="eq-quat-notation-inline"><span class="math display">\[
+\mathbf{q} = [q_0, \mathbf{q}_v] = [q_0, q_1, q_2, q_3]
+\tag{2}\]</span></span></p>
+<p>where: - <span class="math inline">\(q_0\)</span>: scalar part - <span class="math inline">\(\mathbf{q}_v = [q_1, q_2, q_3]^T\)</span>: vector part</p>
+</section>
+<section id="variable-processing-marks" class="level3">
+<h3 class="anchored" data-anchor-id="variable-processing-marks">Variable Processing Marks</h3>
+<p>Different processing stages of variables are distinguished by marks:</p>
+<div id="tbl-variable-marks" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-variable-marks-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;1: Variable processing notation
+</figcaption>
+<div aria-describedby="tbl-variable-marks-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 10%">
+<col style="width: 14%">
+<col style="width: 15%">
+<col style="width: 36%">
+<col style="width: 22%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Mark</th>
+<th>Symbol</th>
+<th>Meaning</th>
+<th>Mathematical Notation</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>None</td>
+<td>-</td>
+<td>True variable</td>
+<td><span class="math inline">\(y(t)\)</span></td>
+<td>Actual physical quantity</td>
+</tr>
+<tr class="even">
+<td>Overbar</td>
+<td>¯</td>
+<td>Measured variable</td>
+<td><span class="math inline">\(\bar{y}(t)\)</span></td>
+<td>Sensor measurement</td>
+</tr>
+<tr class="odd">
+<td>Tilde</td>
+<td>~</td>
+<td>Generic error</td>
+<td><span class="math inline">\(\tilde{y}(t)\)</span></td>
+<td>Difference from reference</td>
+</tr>
+<tr class="even">
+<td>Circumflex</td>
+<td>^</td>
+<td>Estimation</td>
+<td><span class="math inline">\(\hat{x}(t)\)</span></td>
+<td>Based on current + past data</td>
+</tr>
+<tr class="odd">
+<td>Circumflex</td>
+<td>^</td>
+<td>Prediction</td>
+<td><span class="math inline">\(\hat{x}(t\|t-1)\)</span></td>
+<td>Based on past data only</td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+<p><strong>Detailed Definitions</strong>:</p>
+<div id="def-measurement" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 2 (Measured Variable)</strong></span> <span class="math display">\[
+\bar{y}(t) = y(t) + v(t)
+\]</span> where <span class="math inline">\(v(t)\)</span> is measurement noise.</p>
+</div>
+<div id="def-estimation" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 3 (Estimated Variable)</strong></span> <span class="math display">\[
+\hat{x}(t) = \mathcal{E}\{x(t) \mid \bar{y}(0), \ldots, \bar{y}(t)\}
+\]</span> Estimate based on measurements up to <strong>current time</strong> <span class="math inline">\(t\)</span>.</p>
+</div>
+<div id="def-prediction" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 4 (Predicted Variable)</strong></span> <span class="math display">\[
+\hat{x}(k+1\|k) = \mathcal{E}\{x(k+1) \mid \bar{y}(0), \ldots, \bar{y}(k)\}
+\]</span> Prediction at time <span class="math inline">\(k+1\)</span> based on measurements up to <strong>previous time</strong> <span class="math inline">\(k\)</span>.</p>
+</div>
+<div id="def-error" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 5 (Prediction Error)</strong></span> <span class="math display">\[
+\tilde{x}(k) = x(k) - \hat{x}(k\|k-1)
+\]</span> or more generally: <span class="math display">\[
+\tilde{y}(k) = y(k) - y_{ref}(k)
+\]</span></p>
+</div>
+</section>
+<section id="stochastic-process-notation" class="level3">
+<h3 class="anchored" data-anchor-id="stochastic-process-notation">Stochastic Process Notation</h3>
+<div id="def-psd" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 6 (Power Spectral Density (PSD))</strong></span> For a stationary stochastic process <span class="math inline">\(d(t)\)</span>, the <strong>power spectral density</strong> is denoted:</p>
+<p><span class="math display">\[
+S_d^2(f) \geq 0 \quad [\text{units}^2/\text{Hz}]
+\]</span></p>
+<p>The <strong>spectral density (SD)</strong> is the square root:</p>
+<p><span class="math display">\[
+S_d(f) = \sqrt{S_d^2(f)} \quad [\text{units}/\sqrt{\text{Hz}}]
+\]</span></p>
+</div>
+<p><strong>Relationship to Autocorrelation</strong>: <span class="math display">\[
+S_d^2(f) = \int_{-\infty}^{\infty} R_d(\tau) e^{-j2\pi f\tau} d\tau
+\]</span></p>
+<p>where <span class="math inline">\(R_d(\tau) = \mathcal{E}\{d(t)d(t+\tau)\}\)</span> is the autocorrelation function.</p>
+</section>
+</section>
+<section id="sec-notation-tables" class="level2">
+<h2 class="anchored" data-anchor-id="sec-notation-tables">Notation Tables</h2>
+<section id="sec-table-vectors-matrices" class="level3">
+<h3 class="anchored" data-anchor-id="sec-table-vectors-matrices">Table 1: Vectors and Matrices</h3>
+<div id="tbl-vectors-matrices" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-vectors-matrices-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;2: Notation for vectors and matrices
+</figcaption>
+<div aria-describedby="tbl-vectors-matrices-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 22%">
+<col style="width: 36%">
+<col style="width: 41%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Symbol</th>
+<th>Description</th>
+<th>Example/Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="math inline">\(\mathbb{R}\)</span></td>
+<td>Set of real numbers</td>
+<td><span class="math inline">\(x \in \mathbb{R}\)</span></td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(\mathbb{R}^n\)</span></td>
+<td>n-dimensional Euclidean space</td>
+<td><span class="math inline">\(\mathbf{x} \in \mathbb{R}^3\)</span></td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(\mathbf{v}\)</span>, <span class="math inline">\(\mathbf{v}_i\)</span></td>
+<td>Coordinate vector (in frame <span class="math inline">\(i\)</span>)</td>
+<td><span class="math inline">\(\mathbf{v} = [v_1, v_2, v_3]^T\)</span></td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(\mathbf{0}_n\)</span></td>
+<td>n-dimensional zero vector</td>
+<td><span class="math inline">\(\mathbf{0}_3 = [0, 0, 0]^T\)</span></td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(\|\mathbf{v}\|\)</span></td>
+<td>Euclidean norm (2-norm)</td>
+<td><span class="math inline">\(\|\mathbf{v}\| = \sqrt{v_1^2 + v_2^2 + v_3^2}\)</span></td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(\|\mathbf{v}\|_p\)</span></td>
+<td>p-norm</td>
+<td><span class="math inline">\(\|\mathbf{v}\|_\infty = \max_i |v_i|\)</span></td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(\mathbf{v}^T\)</span></td>
+<td>Transpose</td>
+<td>Row vector</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(\mathbf{v} \cdot \mathbf{w}\)</span></td>
+<td>Dot product (inner product)</td>
+<td><span class="math inline">\(\mathbf{v}^T\mathbf{w} = \sum_i v_i w_i\)</span></td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(\mathbf{v} \times \mathbf{w}\)</span></td>
+<td>Cross product</td>
+<td><span class="math inline">\(\mathbf{v} \times \mathbf{w} \in \mathbb{R}^3\)</span></td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\([\mathbf{v}\times]\)</span> or <span class="math inline">\(\mathbf{V}_\times\)</span></td>
+<td>Skew-symmetric matrix</td>
+<td><span class="math inline">\([\mathbf{v}\times]\mathbf{w} = \mathbf{v} \times \mathbf{w}\)</span></td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(\mathbb{F}\)</span>, <span class="math inline">\(\mathcal{F}\)</span></td>
+<td>Cartesian reference frame</td>
+<td><span class="math inline">\(\mathcal{F}_I\)</span> (inertial), <span class="math inline">\(\mathcal{F}_B\)</span> (body)</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(\mathbf{R}_{b/a}\)</span> or <span class="math inline">\(\mathbf{R}_{b}^{a}\)</span></td>
+<td>Rotation matrix</td>
+<td>From frame <span class="math inline">\(a\)</span> to frame <span class="math inline">\(b\)</span></td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(\mathbf{A}\)</span></td>
+<td>Matrix (bold uppercase)</td>
+<td><span class="math inline">\(\mathbf{A} \in \mathbb{R}^{m \times n}\)</span></td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(\mathbf{I}_n\)</span></td>
+<td>n×n identity matrix</td>
+<td><span class="math inline">\(\mathbf{I}_3 = \text{diag}(1,1,1)\)</span></td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(\mathbf{A}^T\)</span></td>
+<td>Matrix transpose</td>
+<td>-</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(\mathbf{A}^{-1}\)</span></td>
+<td>Matrix inverse</td>
+<td>Exists if <span class="math inline">\(\det(\mathbf{A}) \neq 0\)</span></td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(\det(\mathbf{A})\)</span></td>
+<td>Determinant</td>
+<td>Scalar value</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(\text{tr}(\mathbf{A})\)</span></td>
+<td>Trace</td>
+<td><span class="math inline">\(\sum_i a_{ii}\)</span></td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(\text{rank}(\mathbf{A})\)</span></td>
+<td>Rank</td>
+<td>Number of linearly independent rows/columns</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(\lambda_i(\mathbf{A})\)</span></td>
+<td>Eigenvalue</td>
+<td><span class="math inline">\(\det(\mathbf{A} - \lambda\mathbf{I}) = 0\)</span></td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(\sigma_i(\mathbf{A})\)</span></td>
+<td>Singular value</td>
+<td>From SVD</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(\|\mathbf{A}\|\)</span></td>
+<td>Matrix norm</td>
+<td>Induced or Frobenius norm</td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(\mathbf{A} \otimes \mathbf{B}\)</span></td>
+<td>Kronecker product</td>
+<td>Block matrix</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(\text{diag}(a_1, \ldots, a_n)\)</span></td>
+<td>Diagonal matrix</td>
+<td>Off-diagonal elements zero</td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(\text{blkdiag}(\mathbf{A}_1, \ldots)\)</span></td>
+<td>Block diagonal matrix</td>
+<td>-</td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+</section>
+<section id="skew-symmetric-matrix" class="level3">
+<h3 class="anchored" data-anchor-id="skew-symmetric-matrix">Skew-Symmetric Matrix</h3>
+<p>For vector <span class="math inline">\(\mathbf{v} = [v_1, v_2, v_3]^T\)</span>:</p>
+<p><span id="eq-skew-symmetric-matrix"><span class="math display">\[
+[\mathbf{v}\times] = \mathbf{V}_\times = \begin{bmatrix}
+0 &amp; -v_3 &amp; v_2 \\
+v_3 &amp; 0 &amp; -v_1 \\
+-v_2 &amp; v_1 &amp; 0
+\end{bmatrix}
+\tag{3}\]</span></span></p>
+<p><strong>Properties</strong>: - <span class="math inline">\([\mathbf{v}\times]^T = -[\mathbf{v}\times]\)</span> (skew-symmetric) - <span class="math inline">\([\mathbf{v}\times]\mathbf{w} = \mathbf{v} \times \mathbf{w}\)</span> (cross product equivalence) - <span class="math inline">\(\det([\mathbf{v}\times]) = 0\)</span> (singular)</p>
+</section>
+<section id="sec-table-random" class="level3">
+<h3 class="anchored" data-anchor-id="sec-table-random">Table 2: Random Variables and Variable Processing</h3>
+<div id="tbl-random-variables" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-random-variables-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;3: Notation for random variables and signal processing
+</figcaption>
+<div aria-describedby="tbl-random-variables-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 17%">
+<col style="width: 28%">
+<col style="width: 53%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Symbol</th>
+<th>Description</th>
+<th>Mathematical Definition</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="math inline">\(\mathcal{E}\{\mathbf{v}\}\)</span></td>
+<td>Expected value (mean)</td>
+<td><span class="math inline">\(\boldsymbol{\mu}_v = \int \mathbf{v} p(\mathbf{v}) d\mathbf{v}\)</span></td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(\mathbf{P}_v\)</span></td>
+<td>Covariance matrix</td>
+<td><span class="math inline">\(\mathcal{E}\{(\mathbf{v}-\boldsymbol{\mu})(\mathbf{v}-\boldsymbol{\mu})^T\}\)</span></td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(\sigma_j\)</span></td>
+<td>Standard deviation</td>
+<td><span class="math inline">\(\sigma_j = \sqrt{[\mathbf{P}_v]_{jj}}\)</span></td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(\rho_{ij}\)</span></td>
+<td>Correlation coefficient</td>
+<td><span class="math inline">\(\rho_{ij} = [\mathbf{P}_v]_{ij}/(\sigma_i\sigma_j)\)</span></td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(\mathcal{N}(\boldsymbol{\mu}, \mathbf{P})\)</span></td>
+<td>Normal distribution</td>
+<td>Multivariate Gaussian</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(\mathbf{w}(k)\)</span></td>
+<td>White noise sequence</td>
+<td><span class="math inline">\(\mathcal{E}\{\mathbf{w}(k)\mathbf{w}(j)^T\} = \mathbf{Q}\delta_{kj}\)</span></td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(S_d(f)\)</span></td>
+<td>Spectral density</td>
+<td><span class="math inline">\([\text{units}/\sqrt{\text{Hz}}]\)</span></td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(S_d^2(f)\)</span></td>
+<td>Power spectral density</td>
+<td><span class="math inline">\([\text{units}^2/\text{Hz}]\)</span></td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(\bar{y}(t)\)</span></td>
+<td>Measured variable</td>
+<td><span class="math inline">\(\bar{y}(t) = y(t) + v(t)\)</span></td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(\hat{x}(t)\)</span></td>
+<td>Estimated state</td>
+<td>Current + past measurements</td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(\hat{x}(k\|k-1)\)</span></td>
+<td>Predicted state</td>
+<td>Past measurements only</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(\tilde{x}(t)\)</span></td>
+<td>Estimation/prediction error</td>
+<td><span class="math inline">\(x(t) - \hat{x}(t)\)</span></td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(e_m(k)\)</span></td>
+<td>Measured model error</td>
+<td><span class="math inline">\(\bar{y}(k) - \hat{y}(k)\)</span></td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(G(s)\)</span></td>
+<td>Transfer function (CT)</td>
+<td>Laplace domain, <span class="math inline">\(s = j\omega\)</span></td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(G(z)\)</span></td>
+<td>Transfer function (DT)</td>
+<td>z-domain</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(S(s)\)</span>, <span class="math inline">\(S(z)\)</span></td>
+<td>Sensitivity function</td>
+<td><span class="math inline">\(S = (I + GK)^{-1}\)</span></td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(T(s)\)</span>, <span class="math inline">\(T(z)\)</span></td>
+<td>Complementary sensitivity</td>
+<td><span class="math inline">\(T = GK(I + GK)^{-1} = I - S\)</span></td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(\mathcal{H}_\infty\)</span></td>
+<td>H-infinity norm</td>
+<td><span class="math inline">\(\|G\|_\infty = \sup_\omega \bar{\sigma}(G(j\omega))\)</span></td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(\mathcal{H}_2\)</span></td>
+<td>H-2 norm</td>
+<td>Related to variance</td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+</section>
+<section id="additional-definitions" class="level3">
+<h3 class="anchored" data-anchor-id="additional-definitions">Additional Definitions</h3>
+<div id="def-white-noise" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 7 (Discrete White Noise)</strong></span> A sequence <span class="math inline">\(\{\mathbf{w}(k)\}\)</span> is <strong>white noise</strong> if:</p>
+<ol type="1">
+<li><span class="math inline">\(\mathcal{E}\{\mathbf{w}(k)\} = \mathbf{0}\)</span> (zero mean)</li>
+<li><span class="math inline">\(\mathcal{E}\{\mathbf{w}(k)\mathbf{w}(j)^T\} = \mathbf{Q}\delta_{kj}\)</span> (uncorrelated)</li>
+</ol>
+<p>where <span class="math inline">\(\delta_{kj}\)</span> is the Kronecker delta.</p>
+</div>
+<div id="def-sensitivity" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 8 (Sensitivity Functions)</strong></span> For a feedback system with plant <span class="math inline">\(G\)</span> and controller <span class="math inline">\(K\)</span>:</p>
+<p><strong>Sensitivity</strong> (error to disturbance): <span class="math display">\[S = (I + GK)^{-1}\]</span></p>
+<p><strong>Complementary Sensitivity</strong> (output to reference): <span class="math display">\[T = GK(I + GK)^{-1} = I - S\]</span></p>
+<p><strong>Identity relationship</strong>: <span class="math display">\[S + T = I\]</span></p>
+</div>
+</section>
+</section>
+<section id="sec-spacecraft-notation" class="level2">
+<h2 class="anchored" data-anchor-id="sec-spacecraft-notation">Special Notation for Spacecraft Systems</h2>
+<section id="reference-frames" class="level3">
+<h3 class="anchored" data-anchor-id="reference-frames">Reference Frames</h3>
+<div id="tbl-reference-frames" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-reference-frames-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;4: Standard reference frames
+</figcaption>
+<div aria-describedby="tbl-reference-frames-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Symbol</th>
+<th>Frame Name</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="math inline">\(\mathcal{F}_I\)</span></td>
+<td>Inertial (ECI)</td>
+<td>Earth-Centered Inertial</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(\mathcal{F}_O\)</span></td>
+<td>Orbital (LVLH)</td>
+<td>Local Vertical Local Horizontal</td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(\mathcal{F}_B\)</span></td>
+<td>Body</td>
+<td>Spacecraft body-fixed</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(\mathcal{F}_S\)</span></td>
+<td>Sensor</td>
+<td>Sensor-fixed frame</td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(\mathcal{F}_C\)</span></td>
+<td>Control</td>
+<td>Control reference frame</td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+</section>
+<section id="attitude-representations" class="level3">
+<h3 class="anchored" data-anchor-id="attitude-representations">Attitude Representations</h3>
+<div id="tbl-attitude-representations" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-attitude-representations-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;5: Attitude representation comparison
+</figcaption>
+<div aria-describedby="tbl-attitude-representations-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 18%">
+<col style="width: 37%">
+<col style="width: 27%">
+<col style="width: 16%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Symbol</th>
+<th>Representation</th>
+<th>Parameters</th>
+<th>Range</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="math inline">\(\mathbf{R} \in SO(3)\)</span></td>
+<td>Direction Cosine Matrix</td>
+<td>9 (6 constraints)</td>
+<td>-</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\((\phi, \theta, \psi)\)</span></td>
+<td>Euler angles (3-2-1)</td>
+<td>3</td>
+<td>Singularity at <span class="math inline">\(\theta = \pm 90°\)</span></td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(\mathbf{q} = [q_0, \mathbf{q}_v]\)</span></td>
+<td>Quaternion</td>
+<td>4 (1 constraint)</td>
+<td><span class="math inline">\(\|\mathbf{q}\| = 1\)</span></td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(\boldsymbol{\sigma}\)</span></td>
+<td>Modified Rodrigues Parameters</td>
+<td>3</td>
+<td>Singularity at 360°</td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\((\phi, \mathbf{e})\)</span></td>
+<td>Axis-angle</td>
+<td>4 (1 constraint)</td>
+<td><span class="math inline">\(\phi \in [0, \pi]\)</span>, <span class="math inline">\(\|\mathbf{e}\| = 1\)</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+</section>
+<section id="angular-velocity" class="level3">
+<h3 class="anchored" data-anchor-id="angular-velocity">Angular Velocity</h3>
+<p><span class="math display">\[
+\boldsymbol{\omega}_{b/i} = [\omega_x, \omega_y, \omega_z]^T
+\]</span></p>
+<p>Subscript notation <span class="math inline">\(b/i\)</span> means: “body frame relative to inertial frame”</p>
+</section>
+<section id="orbital-elements" class="level3">
+<h3 class="anchored" data-anchor-id="orbital-elements">Orbital Elements</h3>
+<p><strong>Classical Orbital Elements (COE)</strong>:</p>
+<div id="tbl-coe" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-coe-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;6: Classical orbital elements
+</figcaption>
+<div aria-describedby="tbl-coe-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Symbol</th>
+<th>Element</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="math inline">\(a\)</span></td>
+<td>Semi-major axis</td>
+<td>Orbit size</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(e\)</span></td>
+<td>Eccentricity</td>
+<td>Orbit shape</td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(i\)</span></td>
+<td>Inclination</td>
+<td>Orbit plane angle</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(\Omega\)</span></td>
+<td>RAAN</td>
+<td>Right Ascension of Ascending Node</td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(\omega\)</span></td>
+<td>Argument of periapsis</td>
+<td>Orientation in plane</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(\nu\)</span></td>
+<td>True anomaly</td>
+<td>Position in orbit</td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+</section>
+</section>
+<section id="sec-time-notation" class="level2">
+<h2 class="anchored" data-anchor-id="sec-time-notation">Time Notation</h2>
+<ul>
+<li><strong>Continuous time</strong>: <span class="math inline">\(t \in \mathbb{R}\)</span>, differential equations use <span class="math inline">\(\dot{x}(t) = dx/dt\)</span></li>
+<li><strong>Discrete time</strong>: <span class="math inline">\(k \in \mathbb{Z}\)</span>, difference equations use <span class="math inline">\(x(k+1)\)</span></li>
+<li><strong>Sampling period</strong>: <span class="math inline">\(T_s\)</span> or <span class="math inline">\(\Delta t\)</span></li>
+<li><strong>Conversion</strong>: <span class="math inline">\(x(k) = x(kT_s)\)</span></li>
+</ul>
+</section>
+<section id="sec-units" class="level2">
+<h2 class="anchored" data-anchor-id="sec-units">Physical Units</h2>
+<p>Standard SI units are used throughout unless otherwise specified:</p>
+<div id="tbl-units" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-units-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;7: Standard physical units
+</figcaption>
+<div aria-describedby="tbl-units-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Quantity</th>
+<th>Unit</th>
+<th>Symbol</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Length</td>
+<td>meter</td>
+<td>m</td>
+</tr>
+<tr class="even">
+<td>Mass</td>
+<td>kilogram</td>
+<td>kg</td>
+</tr>
+<tr class="odd">
+<td>Time</td>
+<td>second</td>
+<td>s</td>
+</tr>
+<tr class="even">
+<td>Angle</td>
+<td>radian</td>
+<td>rad</td>
+</tr>
+<tr class="odd">
+<td>Angular velocity</td>
+<td>radians per second</td>
+<td>rad/s</td>
+</tr>
+<tr class="even">
+<td>Force</td>
+<td>newton</td>
+<td>N</td>
+</tr>
+<tr class="odd">
+<td>Torque</td>
+<td>newton-meter</td>
+<td>N·m</td>
+</tr>
+<tr class="even">
+<td>Moment of inertia</td>
+<td>kilogram-meter squared</td>
+<td>kg·m²</td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+</section>
+<section id="summary" class="level2">
+<h2 class="anchored" data-anchor-id="summary">Summary</h2>
+<p>This comprehensive notation system ensures:</p>
+<ol type="1">
+<li><strong>Consistency</strong> across all chapters</li>
+<li><strong>Clarity</strong> in distinguishing physical quantities, measurements, and estimates</li>
+<li><strong>Precision</strong> in mathematical expressions</li>
+<li><strong>Alignment</strong> with aerospace engineering standards</li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Quick Reference
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Keep this section bookmarked for quick reference while reading subsequent chapters. All notation follows these conventions unless explicitly stated otherwise.</p>
+</div>
+</div>
+<hr>
+<p><strong>Continue to</strong>: <a href="#sec-abbreviations">Section 1.3: Abbreviations</a></p>
+</section>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

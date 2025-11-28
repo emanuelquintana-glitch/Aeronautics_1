@@ -1,0 +1,365 @@
+---
+title: "Attitude Representation"
+chapter: 2
+---
+
+## Introducción
+
+La **actitud** se define como la formulación matemática de la **orientación de un cuerpo rígido** en un espacio tridimensional (3D). Para definir la actitud, se requiere la definición de dos sistemas de referencia (o marcos): un **marco del cuerpo** ($\mathbb{B}$) (representativo del cuerpo rígido) y un **marco del observador** ($\mathcal{E}$). La actitud se define como la orientación del marco del cuerpo con respecto al marco del observador.
+
+A lo largo del libro y en la práctica, la actitud puede representarse de varias maneras, cada una con propiedades y usos diferentes.
+
+## Representaciones Clásicas de la Actitud
+
+### Matriz de Actitud (Matriz de Cosenos Directores)
+
+La matriz de dirección coseno (o matriz de actitud) es el **punto de partida** para cualquier representación. Es la primera representación de la actitud $R(\mathbb{B}, \mathcal{E})$, la cual es **única** y pertenece al grupo de matrices ortogonales especiales $SO(3)$ (rotaciones propias).
+
+Esta matriz tiene dos interpretaciones principales:
+
+*   **Alias (Transformación Pasiva):** Se interpreta como la **transformación de coordenadas**, por ejemplo, de las coordenadas del marco del cuerpo a las coordenadas del marco del observador.
+*   **Alibi (Rotación):** Se interpreta como la **rotación de un marco en otro**.
+
+### Ángulos de Euler (Secuencia de Rotaciones)
+
+Cualquier matriz de actitud se puede construir componiendo rotaciones elementales alrededor de los ejes cartesianos (rotaciones de Euler). Los **ángulos de Euler** son los grados de libertad (DoFs) de dichas composiciones, siendo **tres** la dimensión mínima requerida.
+
+*   **Desventaja:** Los ángulos de Euler están sujetos a **singularidades** (el fenómeno conocido como *gimbal lock*), lo que impide su uso para cálculos numéricos eficientes y robustos.
+*   Las cinemáticas de los ángulos de Euler son estudiadas en el Capítulo 6 y se utilizan para anticipar conceptos de cuerpos en precesión.
+
+### Parámetros de Euler y Fórmula de Rodrigues
+
+El **Teorema de Rotación de Euler** establece que cualquier matriz ortogonal $R \in SO(3)$ realiza una rotación vectorial alrededor de su único vector propio real $\vec{v}$ (el eje de rotación) por un ángulo $\vartheta$ (el ángulo de rotación principal).
+
+*   La pareja $\{\vartheta, v\}$ se conoce como los **Parámetros de Euler**.
+*   La **Fórmula de Rodrigues** es una representación de la matriz de actitud en función del ángulo de rotación principal $\vartheta$ y el eje de rotación $v$.
+
+### Cuaterniones Unitarios
+
+Los cuaterniones unitarios son la **alternativa moderna** y representan una solución **libre de singularidades** para la representación de la actitud. Un cuaternión unitario $\mathfrak{q}$ encapsula los Parámetros de Euler.
+
+*   Un cuaternión se puede representar como $\mathfrak{q}=[q_{0}, q]$, donde $q_{0}$ es el componente escalar (la primera coordenada) y $q$ es el componente vectorial (las últimas tres coordenadas).
+*   Para un cuaternión unitario, el componente escalar y el vectorial se relacionan con el ángulo de rotación principal $\vartheta$ y el eje de rotación $v$ de la siguiente manera: $q_{0}=\cos(\vartheta/2)$ y $q=\sin(\vartheta/2)v$.
+*   La **matriz de actitud $R(\mathfrak{q})$** se puede expresar directamente en función de los componentes del cuaternión. Esta expresión también se conoce como la Fórmula de Rodrigues en términos de cuaterniones.
+
+## Conversión y Errores
+
+### Conversiones entre Representaciones
+
+Las conversiones hacia una matriz de actitud $R$ (desde ángulos de Euler, parámetros de Euler o un cuaternión) son **directas** y dan un resultado único. Sin embargo, la conversión desde una matriz de actitud a ángulos de Euler o a cuaterniones a menudo presenta **múltiples soluciones**.
+
+*   La conversión de $R$ a ángulos de Euler requiere elegir la secuencia de ángulos de Euler (por ejemplo, 321 o 313) y puede tener múltiples valores alternativos.
+*   La conversión de $R$ a cuaterniones también tiene una ambigüedad, ya que existen dos representaciones equivalentes.
+
+### Representación de Errores
+
+El **error de seguimiento de actitud verdadero** se define como la matriz de rotación $E_{b}^{r}$ (o el cuaternión equivalente $\mathfrak{e}_{b}^{r}$) que alinea el marco de destino ($\mathcal{R}$) con el marco del cuerpo ($\mathbb{B}$).
+
+*   **Cinemática del Cuaternión de Error:** La cinemática del cuaternión de error $\tilde{\mathfrak{q}}_{r}=\mathfrak{q}_{r}^{-1}\otimes\mathfrak{q}$ (actitud verdadera menos actitud de referencia) es una herramienta esencial para el diseño de *feedback*. El error cero corresponde al cuaternión identidad $i=$.
+*   **Rotaciones Infinitesimales:** Para rotaciones pequeñas, la matriz de error se puede expandir y aproximar, utilizando el vector de rotación $\theta=\vartheta v$.
+
+
+### Vectores Tridimensionales
+
+Un marco cartesiano tridimensional (o marco de referencia) $\mathcal{E} = \{O; \vec{e}_1, \vec{e}_2, \vec{e}_3\}$ es el conjunto ordenado de tres vectores unitarios ortogonales $\vec{e}_k, k=1,2,3$, que parten del origen $O$. El tercer eje $\vec{e}_3$ se conoce como el **polo**, y el plano $\{\vec{e}_1, \vec{e}_2\}$ es el **plano de referencia** o plano del observador.
+
+Un vector $\vec{v} = \overrightarrow{OP}$ desde $O$ hasta el punto $P$ se representa únicamente por las tres proyecciones ortogonales $v_k = \vec{v} \cdot \vec{e}_k$ de $\vec{v}$ sobre cada eje cartesiano $\vec{e}_k$. El punto indica **productos escalares**. El escalar $v_k$ es la **k-ésima coordenada** de $\vec{v}$ en el marco $\mathcal{E}$.
+
+#### Notación de Coordenadas y Vectriz
+
+Las coordenadas pueden recolectarse en un **vector columna** $v$: el vector coordenado o simplemente vector. Usando la notación de **vectriz**, la descomposición coordenada de $\vec{v}$ puede escribirse como:
+
+$$
+\vec{v} = \vec{\mathcal{E}} v = 
+\begin{bmatrix}
+\vec{e}_1 & \vec{e}_2 & \vec{e}_3
+\end{bmatrix}
+\begin{bmatrix}
+v_1 \\
+v_2 \\
+v_3
+\end{bmatrix}, \quad v_k = \vec{v} \cdot \vec{e}_k
+$$
+
+donde $\vec{\mathcal{E}}$ es la vectriz del marco $\mathcal{E}$. La ortogonalidad mutua de los ejes del marco se expresa mediante el producto escalar de la vectriz igual a la matriz identidad $I$:
+
+$$
+\begin{bmatrix}
+\vec{e}_1 \\
+\vec{e}_2 \\
+\vec{e}_3
+\end{bmatrix}
+\cdot
+\begin{bmatrix}
+\vec{e}_1 & \vec{e}_2 & \vec{e}_3
+\end{bmatrix} = I
+$$
+
+#### Sistemas de Coordenadas Derechos e Izquierdos
+
+La terna de ejes $\{\vec{e}_1, \vec{e}_2, \vec{e}_3\}$ puede seleccionarse como **derecha** o **izquierda**. Denotemos cualquiera de las ternas 123, 231 y 312 con $ijk$. La terna de ejes es **derecha** si $\vec{e}_i \times \vec{e}_j = \vec{e}_k$, donde el símbolo $\times$ denota el producto cruz. La terna es **izquierda** si $\vec{e}_i \times \vec{e}_j = -\vec{e}_k$.
+
+La tabla de productos cruz se puede expresar como:
+
+$$
+\begin{bmatrix}
+\vec{e}_1 \\
+\vec{e}_2 \\
+\vec{e}_3
+\end{bmatrix}
+\times
+\begin{bmatrix}
+\vec{e}_1 & \vec{e}_2 & \vec{e}_3
+\end{bmatrix} = \pm
+\begin{bmatrix}
+0 & \vec{e}_3 & -\vec{e}_2 \\
+-\vec{e}_3 & 0 & \vec{e}_1 \\
+\vec{e}_2 & -\vec{e}_1 & 0
+\end{bmatrix}
+$$
+
+Signo positivo significa sistema derecho, signo negativo significa sistema izquierdo. Este libro solo utiliza **marcos derechos**.
+
+#### Norma Euclidiana y Cosenos Directores
+
+La coordenada $v_k$ de un vector unitario $\vec{v}$ que satisface $\vec{v} \cdot \vec{v} = 1$ es el **coseno del ángulo** $\alpha_k$ entre $\vec{v}$ y $\vec{e}_k$, y por esta razón se conoce como el **k-ésimo coseno director** de $\vec{v}$.
+
+La **norma euclidiana** o longitud $v$ de $\vec{v}$ se denota con $|\vec{v}|$ o $|v|$ y se define por:
+
+$$
+v = \sqrt{\vec{v} \cdot \vec{v}} = \sqrt{v \cdot v} = \sqrt{v^T v}
+$$
+
+Esto permite escribir $v_k$ como $v_k = v \cos \alpha_k$.
+
+### Coordenadas Esféricas
+
+Un vector $\vec{r}$ que yace sobre una esfera de radio $r$ satisface $\sqrt{\vec{r} \cdot \vec{r}} = r$. El vector coordenado $r$ de $\vec{r}$ puede representarse mediante **coordenadas esféricas**, que consisten en el radio $r$, azimuth $\alpha$, y ángulo polar $\beta$ como sigue:
+
+$$
+r = \begin{bmatrix}
+r_1 \\
+r_2 \\
+r_3
+\end{bmatrix} = r
+\begin{bmatrix}
+\cos \alpha \sin \beta \\
+\sin \alpha \sin \beta \\
+\cos \beta
+\end{bmatrix}, \quad -\pi \leq \alpha < \pi, \quad 0 \leq \beta \leq \pi
+$$
+
+El **azimuth** $\alpha$ (también conocido como ascensión recta o longitud) es el ángulo desde $\vec{e}_1$ hasta la proyección ortogonal $\vec{p} = r \sin \beta (\cos \alpha \vec{e}_1 + \sin \alpha \vec{e}_2)$ de $\vec{r}$ sobre el plano de referencia. El **ángulo polar** $\beta$ (también conocido como colatitud o inclinación) es el ángulo desde el polo $\vec{e}_3$ hasta $\vec{r}$.
+
+A menudo, el ángulo polar $\beta$ se reemplaza por la **elevación** $\delta = \pi/2 - \beta$ (también conocida como declinación o latitud), que es complementaria al ángulo polar y es positiva desde el plano de referencia hacia $\vec{e}_3$. Las coordenadas se reemplazan por:
+
+$$
+r = \begin{bmatrix}
+r_1 \\
+r_2 \\
+r_3
+\end{bmatrix} = r
+\begin{bmatrix}
+\cos \alpha \cos \delta \\
+\sin \alpha \cos \delta \\
+\sin \delta
+\end{bmatrix}, \quad -\pi \leq \alpha < \pi, \quad -\frac{\pi}{2} \leq \delta \leq \frac{\pi}{2}
+$$
+
+#### Singularidad en los Polos
+
+Las coordenadas esféricas se vuelven **singulares en los polos** de la esfera, donde $\beta = \{0, \pi\}$ y $\delta = \pm \pi/2$, porque el azimuth $\alpha$ se vuelve arbitrario debido a $r_1 = r_2 = 0$. Esta singularidad se conoce como **bloqueo de cardán bidimensional (2D)**.
+
+#### Bloqueo de Cardán Bidimensional
+
+Para entender las implicaciones prácticas, consideremos una antena colocada en el origen $O$ del marco del observador que rastrea un punto objetivo $P$ que se mueve sobre la esfera definida por $\overrightarrow{OP} = \vec{r}$. La antena solo puede escanear el hemisferio norte $r_3 > 0$. El eje de la antena $\vec{a}$ tiene dos grados de libertad: azimuth $-\pi \leq \alpha_a < \pi$ y declinación $0 \leq \delta_a < \pi$.
+
+Cuando la antena apunta hacia $\delta_a = \pi/2$ (al cenit), el eje de la antena se alinea con el polo, es decir, $\vec{a} = \vec{e}_3$, y cualquiera que sea el azimuth $\alpha_a$, la dirección de apuntamiento no puede cambiar: "**se pierde un grado de libertad**".
+
+## Representaciones Clásicas de la Actitud
+
+### Matriz de Actitud (Matriz de Cosenos Directores)
+
+La matriz de dirección coseno (o matriz de actitud) es el **punto de partida** para cualquier representación. Es la primera representación de la actitud $R(\mathbb{B}, \mathcal{E})$, la cual es **única** y pertenece al grupo de matrices ortogonales especiales $SO(3)$ (rotaciones propias).
+
+Esta matriz tiene dos interpretaciones principales:
+
+*   **Alias (Transformación Pasiva):** Se interpreta como la **transformación de coordenadas**, por ejemplo, de las coordenadas del marco del cuerpo a las coordenadas del marco del observador.
+*   **Alibi (Rotación):** Se interpreta como la **rotación de un marco en otro**.
+
+### Ángulos de Euler (Secuencia de Rotaciones)
+
+Cualquier matriz de actitud se puede construir componiendo rotaciones elementales alrededor de los ejes cartesianos (rotaciones de Euler). Los **ángulos de Euler** son los grados de libertad (DoFs) de dichas composiciones, siendo **tres** la dimensión mínima requerida.
+
+*   **Desventaja:** Los ángulos de Euler están sujetos a **singularidades** (el fenómeno conocido como *gimbal lock*), lo que impide su uso para cálculos numéricos eficientes y robustos.
+*   Las cinemáticas de los ángulos de Euler son estudiadas en el Capítulo 6 y se utilizan para anticipar conceptos de cuerpos en precesión.
+
+### Parámetros de Euler y Fórmula de Rodrigues
+
+El **Teorema de Rotación de Euler** establece que cualquier matriz ortogonal $R \in SO(3)$ realiza una rotación vectorial alrededor de su único vector propio real $\vec{v}$ (el eje de rotación) por un ángulo $\vartheta$ (el ángulo de rotación principal).
+
+*   La pareja $\{\vartheta, v\}$ se conoce como los **Parámetros de Euler**.
+*   La **Fórmula de Rodrigues** es una representación de la matriz de actitud en función del ángulo de rotación principal $\vartheta$ y el eje de rotación $v$.
+
+### Cuaterniones Unitarios
+
+Los cuaterniones unitarios son la **alternativa moderna** y representan una solución **libre de singularidades** para la representación de la actitud. Un cuaternión unitario $\mathfrak{q}$ encapsula los Parámetros de Euler.
+
+*   Un cuaternión se puede representar como $\mathfrak{q}=[q_{0}, q]$, donde $q_{0}$ es el componente escalar (la primera coordenada) y $q$ es el componente vectorial (las últimas tres coordenadas).
+*   Para un cuaternión unitario, el componente escalar y el vectorial se relacionan con el ángulo de rotación principal $\vartheta$ y el eje de rotación $v$ de la siguiente manera: $q_{0}=\cos(\vartheta/2)$ y $q=\sin(\vartheta/2)v$.
+*   La **matriz de actitud $R(\mathfrak{q})$** se puede expresar directamente en función de los componentes del cuaternión. Esta expresión también se conoce como la Fórmula de Rodrigues en términos de cuaterniones.
+
+## Conversión y Errores
+
+### Conversiones entre Representaciones
+
+Las conversiones hacia una matriz de actitud $R$ (desde ángulos de Euler, parámetros de Euler o un cuaternión) son **directas** y dan un resultado único. Sin embargo, la conversión desde una matriz de actitud a ángulos de Euler o a cuaterniones a menudo presenta **múltiples soluciones**.
+
+*   La conversión de $R$ a ángulos de Euler requiere elegir la secuencia de ángulos de Euler (por ejemplo, 321 o 313) y puede tener múltiples valores alternativos.
+*   La conversión de $R$ a cuaterniones también tiene una ambigüedad, ya que existen dos representaciones equivalentes.
+
+### Representación de Errores
+
+El **error de seguimiento de actitud verdadero** se define como la matriz de rotación $E_{b}^{r}$ (o el cuaternión equivalente $\mathfrak{e}_{b}^{r}$) que alinea el marco de destino ($\mathcal{R}$) con el marco del cuerpo ($\mathbb{B}$).
+
+*   **Cinemática del Cuaternión de Error:** La cinemática del cuaternión de error $\tilde{\mathfrak{q}}_{r}=\mathfrak{q}_{r}^{-1}\otimes\mathfrak{q}$ (actitud verdadera menos actitud de referencia) es una herramienta esencial para el diseño de *feedback*. El error cero corresponde al cuaternión identidad $i=$.
+*   **Rotaciones Infinitesimales:** Para rotaciones pequeñas, la matriz de error se puede expandir y aproximar, utilizando el vector de rotación $\theta=\vartheta v$.
+
+## Ejercicios
+
+### Ejercicio 1: Círculo Máximo
+
+Demuestre que la ecuación de un **círculo máximo** que pasa por dos puntos $P_1$ y $P_2$ sobre una esfera de radio $r$, con coordenadas $r_1$ y $r_2$, está dada por:
+
+$$
+r(\phi) = \frac{r_1 \sin(\Theta - \phi) + r_2 \sin \phi}{\sin \Theta}, \quad 0 \leq \phi < 2\pi
+$$
+
+donde $\cos \Theta = \frac{r_1 \cdot r_2}{r^2}$.
+
+Reemplazando $\phi$ en la ecuación con $\phi = \gamma\Theta$, $0 \leq \gamma < 1$, se obtiene el **arco de círculo máximo** entre $r_1$ y $r_2$. El arco es la **trayectoria de distancia mínima** entre dos puntos $P_1$ y $P_2$ sobre una esfera, la distancia $d$, conocida como **distancia ortodrómica**, siendo igual a $d = r\Theta$.
+
+Esta ecuación con $\phi = \gamma\Theta$, $0 \leq \gamma < 1$ puede interpretarse como una **interpolación lineal esférica (SLERP)**. Tiende a convertirse en una interpolación lineal tan pronto como $\Theta \to 0$.
+
+```{python}
+# Ejemplo de implementación de coordenadas esféricas y SLERP
+import numpy as np
+
+def spherical_to_cartesian(r, alpha, beta):
+    """Convierte coordenadas esféricas a cartesianas"""
+    return np.array([
+        r * np.cos(alpha) * np.sin(beta),
+        r * np.sin(alpha) * np.sin(beta), 
+        r * np.cos(beta)
+    ])
+
+def slerp(r1, r2, gamma):
+    """Interpolación lineal esférica (SLERP)"""
+    theta = np.arccos(np.dot(r1, r2) / (np.linalg.norm(r1) * np.linalg.norm(r2)))
+    return (r1 * np.sin((1-gamma)*theta) + r2 * np.sin(gamma*theta)) / np.sin(theta)
+
+# Ejemplo de uso
+r1 = spherical_to_cartesian(1, 0, np.pi/4)
+r2 = spherical_to_cartesian(1, np.pi/2, np.pi/3)
+interpolated = slerp(r1, r2, 0.5)
+print(f"Punto interpolado: {interpolated}")
+```
+
+#### Representación Gráfica de un Vector en 3D
+
+```{tikz}
+#| label: fig-vector-decomposition
+#| fig-cap: "Descomposición de un vector $\vec{v}$ en un sistema de coordenadas cartesianas tridimensionales. Se muestran las proyecciones ortogonales $v_1$, $v_2$, $v_3$ y los ángulos $\alpha_k$ entre el vector y cada eje coordenado."
+#| fig-width: 6
+#| fig-height: 5
+#| fig-align: center
+
+\usetikzlibrary{3d, arrows.meta, angles, quotes}
+
+\begin{tikzpicture}[
+    scale=1.2,
+    axis/.style={-{Stealth}, thick, black!60},
+    vector/.style={-{Stealth}, blue, very thick, line width=1.2pt},
+    component/.style={dashed, gray, line width=0.8pt},
+    projection_plane/.style={fill=blue!10, opacity=0.4},
+    observer_plane/.style={fill=green!10, opacity=0.3},
+    angle_label/.style={font=\small}
+]
+
+% Define coordinates in 3D perspective
+\coordinate (O) at (0,0,0);
+\coordinate (X) at (4,0,0);
+\coordinate (Y) at (0,4,0);
+\coordinate (Z) at (0,0,4);
+
+% Define vector V (example coordinates)
+\coordinate (V_tip) at (3, 2.5, 3);
+
+% Draw the "Observer's plane" (xy-plane)
+\fill[observer_plane] (O) -- (X) -- (3,2.5,0) -- (Y) -- cycle;
+\node[anchor=north east, green!50!black] at (1.5,1,0) {Plano del Observador};
+
+% Draw projection planes
+\fill[projection_plane] (O) -- (X) -- (3,0,3) -- (V_tip) -- (0,0,3) -- (Z) -- cycle;
+\node[anchor=west, blue!50!black, rotate=45] at (1.5,0,1.5) {Plano de Proyección};
+
+% Draw axes with labels
+\draw[axis] (O) -- (X) node[below left] {$\vec{e}_1$};
+\draw[axis] (O) -- (Y) node[below right] {$\vec{e}_2$};
+\draw[axis] (O) -- (Z) node[above] {$\vec{e}_3$ (Polo)};
+
+% Draw the main vector V
+\draw[vector] (O) -- (V_tip) node[above left] {$\vec{v}$};
+
+% Draw component lines (dashed projections)
+\draw[component] (V_tip) -- (3, 0, 3) node[midway, right] {}; % to xz plane
+\draw[component] (V_tip) -- (0, 2.5, 3) node[midway, left] {}; % to yz plane  
+\draw[component] (V_tip) -- (3, 2.5, 0) node[midway, below] {}; % to xy plane
+
+% Draw component vectors along axes
+\draw[red, thick, -{Stealth}] (O) -- (3,0,0) node[midway, below] {$v_1\vec{e}_1$};
+\draw[red, thick, -{Stealth}] (O) -- (0,2.5,0) node[midway, left] {$v_2\vec{e}_2$};
+\draw[red, thick, -{Stealth}] (O) -- (0,0,3) node[midway, left] {$v_3\vec{e}_3$};
+
+% Add angle markers
+\pic [draw, angle radius=0.6cm, "$\alpha_1$", angle eccentricity=1.4, angle_label] {angle = X--O--V_tip};
+\pic [draw, angle radius=0.8cm, "$\alpha_2$", angle eccentricity=1.4, angle_label] {angle = Y--O--V_tip};
+\pic [draw, angle radius=0.5cm, "$\alpha_3$", angle eccentricity=1.4, angle_label] {angle = Z--O--V_tip};
+
+% Add coordinate points
+\node[below] at (3,0,0) {$v_1$};
+\node[left] at (0,2.5,0) {$v_2$};
+\node[left] at (0,0,3) {$v_3$};
+
+\end{tikzpicture}
+```
+
+## Resumen
+
+Mientras que la matriz de actitud y los ángulos de Euler son fundamentales para definir la orientación y sus DoFs, los **cuaterniones unitarios** son la representación moderna preferida para el modelado y control (como en la metodología EMC) debido a su naturaleza **sin singularidades**.
+
+> **Analogía:** La importancia de los cuaterniones en la representación de la actitud es similar a cómo un sistema de coordenadas GPS usa cuatro dimensiones (latitud, longitud, altitud y tiempo) para localizar un punto en el espacio-tiempo de manera inequívoca y sin los problemas de singularidad que enfrentarían si solo se usaran tres ángulos de inclinación (como el temido *gimbal lock* que afecta a los ángulos de Euler) para definir una posición en 3D. El cuaternión proporciona una representación algebraica robusta para la rotación.
+
+## Ejercicios
+
+```{python}
+# Ejemplo de implementación de cuaterniones en Python
+import numpy as np
+
+def quaternion_to_rotation_matrix(q):
+    """
+    Convierte un cuaternión unitario a matriz de rotación
+    """
+    q0, q1, q2, q3 = q
+    return np.array([
+        [1-2*(q2**2+q3**2), 2*(q1*q2-q0*q3), 2*(q1*q3+q0*q2)],
+        [2*(q1*q2+q0*q3), 1-2*(q1**2+q3**2), 2*(q2*q3-q0*q1)],
+        [2*(q1*q3-q0*q2), 2*(q2*q3+q0*q1), 1-2*(q1**2+q2**2)]
+    ])
+
+# Ejemplo de uso
+q = np.array([0.707, 0.0, 0.707, 0.0])  # Cuaternión unitario
+R = quaternion_to_rotation_matrix(q)
+print("Matriz de rotación:")
+print(R)
+```

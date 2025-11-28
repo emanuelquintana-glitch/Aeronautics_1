@@ -1,0 +1,330 @@
+---
+title: "Notation Rules and Tables"
+subtitle: "Section 1.2"
+---
+
+# Notation Rules and Tables {#sec-notation}
+
+Consistent mathematical notation is essential for clarity in spacecraft dynamics and control. This section establishes comprehensive notation rules used throughout the manuscript.
+
+## Notation Rules {#sec-notation-rules}
+
+### Vector Notation
+
+::: {#def-vector-notation}
+## Vector Representation
+
+- **Free 3D vectors** are denoted with arrow symbols: $\vec{v}$
+- **Coordinate vectors** are written in **bold**: $\mathbf{v}$
+- **Reference frame subscript** may be appended: $\mathbf{v}_i$ (vector in frame $i$)
+:::
+
+**Example**:
+$$
+\vec{v} \quad \text{(geometric vector)} \quad \longrightarrow \quad \mathbf{v}_{\mathcal{B}} = \begin{bmatrix} v_1 \\ v_2 \\ v_3 \end{bmatrix} \quad \text{(coordinates in frame } \mathcal{B}\text{)}
+$$
+
+### Column Vector Convention
+
+::: {.callout-important}
+## Default Orientation
+
+Coordinate vectors are **column vectors** by default. The non-standard inline notation:
+
+$$\mathbf{v} = [v_1, v_2, v_3]$$
+
+represents a **column** 3D vector, equivalent to:
+
+$$\mathbf{v} = \begin{bmatrix} v_1 \\ v_2 \\ v_3 \end{bmatrix}$$
+:::
+
+### Quaternion Notation
+
+Quaternions can be represented in two equivalent forms:
+
+**Matrix form**:
+$$
+\mathbf{q} = \begin{bmatrix} q_0 \\ \mathbf{q}_v \end{bmatrix} = \begin{bmatrix} q_0 \\ q_1 \\ q_2 \\ q_3 \end{bmatrix}
+$$ {#eq-quat-notation-matrix}
+
+**Inline notation**:
+$$
+\mathbf{q} = [q_0, \mathbf{q}_v] = [q_0, q_1, q_2, q_3]
+$$ {#eq-quat-notation-inline}
+
+where:
+- $q_0$: scalar part
+- $\mathbf{q}_v = [q_1, q_2, q_3]^T$: vector part
+
+### Variable Processing Marks
+
+Different processing stages of variables are distinguished by marks:
+
+| Mark | Symbol | Meaning | Mathematical Notation | Description |
+|------|--------|---------|---------------------|-------------|
+| None | - | True variable | $y(t)$ | Actual physical quantity |
+| Overbar | ¯ | Measured variable | $\bar{y}(t)$ | Sensor measurement |
+| Tilde | ~ | Generic error | $\tilde{y}(t)$ | Difference from reference |
+| Circumflex | ^ | Estimation | $\hat{x}(t)$ | Based on current + past data |
+| Circumflex | ^ | Prediction | $\hat{x}(t\|t-1)$ | Based on past data only |
+
+: Variable processing notation {#tbl-variable-marks}
+
+**Detailed Definitions**:
+
+::: {#def-measurement}
+## Measured Variable
+$$
+\bar{y}(t) = y(t) + v(t)
+$$
+where $v(t)$ is measurement noise.
+:::
+
+::: {#def-estimation}
+## Estimated Variable
+$$
+\hat{x}(t) = \mathcal{E}\{x(t) \mid \bar{y}(0), \ldots, \bar{y}(t)\}
+$$
+Estimate based on measurements up to **current time** $t$.
+:::
+
+::: {#def-prediction}
+## Predicted Variable
+$$
+\hat{x}(k+1\|k) = \mathcal{E}\{x(k+1) \mid \bar{y}(0), \ldots, \bar{y}(k)\}
+$$
+Prediction at time $k+1$ based on measurements up to **previous time** $k$.
+:::
+
+::: {#def-error}
+## Prediction Error
+$$
+\tilde{x}(k) = x(k) - \hat{x}(k\|k-1)
+$$
+or more generally:
+$$
+\tilde{y}(k) = y(k) - y_{ref}(k)
+$$
+:::
+
+### Stochastic Process Notation
+
+::: {#def-psd}
+## Power Spectral Density (PSD)
+
+For a stationary stochastic process $d(t)$, the **power spectral density** is denoted:
+
+$$
+S_d^2(f) \geq 0 \quad [\text{units}^2/\text{Hz}]
+$$
+
+The **spectral density (SD)** is the square root:
+
+$$
+S_d(f) = \sqrt{S_d^2(f)} \quad [\text{units}/\sqrt{\text{Hz}}]
+$$
+:::
+
+**Relationship to Autocorrelation**:
+$$
+S_d^2(f) = \int_{-\infty}^{\infty} R_d(\tau) e^{-j2\pi f\tau} d\tau
+$$
+
+where $R_d(\tau) = \mathcal{E}\{d(t)d(t+\tau)\}$ is the autocorrelation function.
+
+## Notation Tables {#sec-notation-tables}
+
+### Table 1: Vectors and Matrices {#sec-table-vectors-matrices}
+
+| Symbol | Description | Example/Notes |
+|--------|-------------|---------------|
+| $\mathbb{R}$ | Set of real numbers | $x \in \mathbb{R}$ |
+| $\mathbb{R}^n$ | n-dimensional Euclidean space | $\mathbf{x} \in \mathbb{R}^3$ |
+| $\mathbf{v}$, $\mathbf{v}_i$ | Coordinate vector (in frame $i$) | $\mathbf{v} = [v_1, v_2, v_3]^T$ |
+| $\mathbf{0}_n$ | n-dimensional zero vector | $\mathbf{0}_3 = [0, 0, 0]^T$ |
+| $\|\mathbf{v}\|$ | Euclidean norm (2-norm) | $\|\mathbf{v}\| = \sqrt{v_1^2 + v_2^2 + v_3^2}$ |
+| $\|\mathbf{v}\|_p$ | p-norm | $\|\mathbf{v}\|_\infty = \max_i |v_i|$ |
+| $\mathbf{v}^T$ | Transpose | Row vector |
+| $\mathbf{v} \cdot \mathbf{w}$ | Dot product (inner product) | $\mathbf{v}^T\mathbf{w} = \sum_i v_i w_i$ |
+| $\mathbf{v} \times \mathbf{w}$ | Cross product | $\mathbf{v} \times \mathbf{w} \in \mathbb{R}^3$ |
+| $[\mathbf{v}\times]$ or $\mathbf{V}_\times$ | Skew-symmetric matrix | $[\mathbf{v}\times]\mathbf{w} = \mathbf{v} \times \mathbf{w}$ |
+| $\mathbb{F}$, $\mathcal{F}$ | Cartesian reference frame | $\mathcal{F}_I$ (inertial), $\mathcal{F}_B$ (body) |
+| $\mathbf{R}_{b/a}$ or $\mathbf{R}_{b}^{a}$ | Rotation matrix | From frame $a$ to frame $b$ |
+| $\mathbf{A}$ | Matrix (bold uppercase) | $\mathbf{A} \in \mathbb{R}^{m \times n}$ |
+| $\mathbf{I}_n$ | n×n identity matrix | $\mathbf{I}_3 = \text{diag}(1,1,1)$ |
+| $\mathbf{A}^T$ | Matrix transpose | - |
+| $\mathbf{A}^{-1}$ | Matrix inverse | Exists if $\det(\mathbf{A}) \neq 0$ |
+| $\det(\mathbf{A})$ | Determinant | Scalar value |
+| $\text{tr}(\mathbf{A})$ | Trace | $\sum_i a_{ii}$ |
+| $\text{rank}(\mathbf{A})$ | Rank | Number of linearly independent rows/columns |
+| $\lambda_i(\mathbf{A})$ | Eigenvalue | $\det(\mathbf{A} - \lambda\mathbf{I}) = 0$ |
+| $\sigma_i(\mathbf{A})$ | Singular value | From SVD |
+| $\|\mathbf{A}\|$ | Matrix norm | Induced or Frobenius norm |
+| $\mathbf{A} \otimes \mathbf{B}$ | Kronecker product | Block matrix |
+| $\text{diag}(a_1, \ldots, a_n)$ | Diagonal matrix | Off-diagonal elements zero |
+| $\text{blkdiag}(\mathbf{A}_1, \ldots)$ | Block diagonal matrix | - |
+
+: Notation for vectors and matrices {#tbl-vectors-matrices}
+
+### Skew-Symmetric Matrix
+
+For vector $\mathbf{v} = [v_1, v_2, v_3]^T$:
+
+$$
+[\mathbf{v}\times] = \mathbf{V}_\times = \begin{bmatrix}
+0 & -v_3 & v_2 \\
+v_3 & 0 & -v_1 \\
+-v_2 & v_1 & 0
+\end{bmatrix}
+$$ {#eq-skew-symmetric-matrix}
+
+**Properties**:
+- $[\mathbf{v}\times]^T = -[\mathbf{v}\times]$ (skew-symmetric)
+- $[\mathbf{v}\times]\mathbf{w} = \mathbf{v} \times \mathbf{w}$ (cross product equivalence)
+- $\det([\mathbf{v}\times]) = 0$ (singular)
+
+### Table 2: Random Variables and Variable Processing {#sec-table-random}
+
+| Symbol | Description | Mathematical Definition |
+|--------|-------------|------------------------|
+| $\mathcal{E}\{\mathbf{v}\}$ | Expected value (mean) | $\boldsymbol{\mu}_v = \int \mathbf{v} p(\mathbf{v}) d\mathbf{v}$ |
+| $\mathbf{P}_v$ | Covariance matrix | $\mathcal{E}\{(\mathbf{v}-\boldsymbol{\mu})(\mathbf{v}-\boldsymbol{\mu})^T\}$ |
+| $\sigma_j$ | Standard deviation | $\sigma_j = \sqrt{[\mathbf{P}_v]_{jj}}$ |
+| $\rho_{ij}$ | Correlation coefficient | $\rho_{ij} = [\mathbf{P}_v]_{ij}/(\sigma_i\sigma_j)$ |
+| $\mathcal{N}(\boldsymbol{\mu}, \mathbf{P})$ | Normal distribution | Multivariate Gaussian |
+| $\mathbf{w}(k)$ | White noise sequence | $\mathcal{E}\{\mathbf{w}(k)\mathbf{w}(j)^T\} = \mathbf{Q}\delta_{kj}$ |
+| $S_d(f)$ | Spectral density | $[\text{units}/\sqrt{\text{Hz}}]$ |
+| $S_d^2(f)$ | Power spectral density | $[\text{units}^2/\text{Hz}]$ |
+| $\bar{y}(t)$ | Measured variable | $\bar{y}(t) = y(t) + v(t)$ |
+| $\hat{x}(t)$ | Estimated state | Current + past measurements |
+| $\hat{x}(k\|k-1)$ | Predicted state | Past measurements only |
+| $\tilde{x}(t)$ | Estimation/prediction error | $x(t) - \hat{x}(t)$ |
+| $e_m(k)$ | Measured model error | $\bar{y}(k) - \hat{y}(k)$ |
+| $G(s)$ | Transfer function (CT) | Laplace domain, $s = j\omega$ |
+| $G(z)$ | Transfer function (DT) | z-domain |
+| $S(s)$, $S(z)$ | Sensitivity function | $S = (I + GK)^{-1}$ |
+| $T(s)$, $T(z)$ | Complementary sensitivity | $T = GK(I + GK)^{-1} = I - S$ |
+| $\mathcal{H}_\infty$ | H-infinity norm | $\|G\|_\infty = \sup_\omega \bar{\sigma}(G(j\omega))$ |
+| $\mathcal{H}_2$ | H-2 norm | Related to variance |
+
+: Notation for random variables and signal processing {#tbl-random-variables}
+
+### Additional Definitions
+
+::: {#def-white-noise}
+## Discrete White Noise
+
+A sequence $\{\mathbf{w}(k)\}$ is **white noise** if:
+
+1. $\mathcal{E}\{\mathbf{w}(k)\} = \mathbf{0}$ (zero mean)
+2. $\mathcal{E}\{\mathbf{w}(k)\mathbf{w}(j)^T\} = \mathbf{Q}\delta_{kj}$ (uncorrelated)
+
+where $\delta_{kj}$ is the Kronecker delta.
+:::
+
+::: {#def-sensitivity}
+## Sensitivity Functions
+
+For a feedback system with plant $G$ and controller $K$:
+
+**Sensitivity** (error to disturbance):
+$$S = (I + GK)^{-1}$$
+
+**Complementary Sensitivity** (output to reference):
+$$T = GK(I + GK)^{-1} = I - S$$
+
+**Identity relationship**:
+$$S + T = I$$
+:::
+
+## Special Notation for Spacecraft Systems {#sec-spacecraft-notation}
+
+### Reference Frames
+
+| Symbol | Frame Name | Description |
+|--------|------------|-------------|
+| $\mathcal{F}_I$ | Inertial (ECI) | Earth-Centered Inertial |
+| $\mathcal{F}_O$ | Orbital (LVLH) | Local Vertical Local Horizontal |
+| $\mathcal{F}_B$ | Body | Spacecraft body-fixed |
+| $\mathcal{F}_S$ | Sensor | Sensor-fixed frame |
+| $\mathcal{F}_C$ | Control | Control reference frame |
+
+: Standard reference frames {#tbl-reference-frames}
+
+### Attitude Representations
+
+| Symbol | Representation | Parameters | Range |
+|--------|----------------|------------|-------|
+| $\mathbf{R} \in SO(3)$ | Direction Cosine Matrix | 9 (6 constraints) | - |
+| $(\phi, \theta, \psi)$ | Euler angles (3-2-1) | 3 | Singularity at $\theta = \pm 90°$ |
+| $\mathbf{q} = [q_0, \mathbf{q}_v]$ | Quaternion | 4 (1 constraint) | $\|\mathbf{q}\| = 1$ |
+| $\boldsymbol{\sigma}$ | Modified Rodrigues Parameters | 3 | Singularity at 360° |
+| $(\phi, \mathbf{e})$ | Axis-angle | 4 (1 constraint) | $\phi \in [0, \pi]$, $\|\mathbf{e}\| = 1$ |
+
+: Attitude representation comparison {#tbl-attitude-representations}
+
+### Angular Velocity
+
+$$
+\boldsymbol{\omega}_{b/i} = [\omega_x, \omega_y, \omega_z]^T
+$$
+
+Subscript notation $b/i$ means: "body frame relative to inertial frame"
+
+### Orbital Elements
+
+**Classical Orbital Elements (COE)**:
+
+| Symbol | Element | Description |
+|--------|---------|-------------|
+| $a$ | Semi-major axis | Orbit size |
+| $e$ | Eccentricity | Orbit shape |
+| $i$ | Inclination | Orbit plane angle |
+| $\Omega$ | RAAN | Right Ascension of Ascending Node |
+| $\omega$ | Argument of periapsis | Orientation in plane |
+| $\nu$ | True anomaly | Position in orbit |
+
+: Classical orbital elements {#tbl-coe}
+
+## Time Notation {#sec-time-notation}
+
+- **Continuous time**: $t \in \mathbb{R}$, differential equations use $\dot{x}(t) = dx/dt$
+- **Discrete time**: $k \in \mathbb{Z}$, difference equations use $x(k+1)$
+- **Sampling period**: $T_s$ or $\Delta t$
+- **Conversion**: $x(k) = x(kT_s)$
+
+## Physical Units {#sec-units}
+
+Standard SI units are used throughout unless otherwise specified:
+
+| Quantity | Unit | Symbol |
+|----------|------|--------|
+| Length | meter | m |
+| Mass | kilogram | kg |
+| Time | second | s |
+| Angle | radian | rad |
+| Angular velocity | radians per second | rad/s |
+| Force | newton | N |
+| Torque | newton-meter | N·m |
+| Moment of inertia | kilogram-meter squared | kg·m² |
+
+: Standard physical units {#tbl-units}
+
+## Summary
+
+This comprehensive notation system ensures:
+
+1. **Consistency** across all chapters
+2. **Clarity** in distinguishing physical quantities, measurements, and estimates
+3. **Precision** in mathematical expressions
+4. **Alignment** with aerospace engineering standards
+
+::: {.callout-tip}
+## Quick Reference
+
+Keep this section bookmarked for quick reference while reading subsequent chapters. All notation follows these conventions unless explicitly stated otherwise.
+:::
+
+---
+
+**Continue to**: [Section 1.3: Abbreviations](#sec-abbreviations)

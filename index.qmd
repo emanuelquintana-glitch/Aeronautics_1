@@ -1,12 +1,426 @@
 ---
-title: Aeronautics
-authors:
-  - name: Norah Jones
-    affiliation: The University
-    roles: writing
-    corresponding: true
-bibliography: references.bib
+title: "Spacecraft Dynamics and Control"
+subtitle: "Mathematical Foundations and Applications"
+author:
+  - name: Emanuel Quintana Silva
+    orcid: 0000-0000-0000-0000
+    email: emanuel.quintana@uptc.edu.co
+    affiliations:
+      - name: Universidad Pedagógica y Tecnológica de Colombia
+        department: School of Engineering
+        address: Sogamoso, Boyacá
+        country: Colombia
+        postal-code: 152210
+date: today
+date-format: long
+abstract: |
+  This manuscript presents a comprehensive treatment of spacecraft dynamics and control systems, with emphasis on the Embedded Model Control (EMC) approach. The work provides rigorous mathematical foundations for attitude representation, orbital mechanics, and control system design. Topics include rotation parameterizations (quaternions, direction cosine matrices, Modified Rodrigues Parameters), orbital dynamics under perturbations, sensor and actuator modeling, attitude determination algorithms (TRIAD, QUEST, Davenport's q-method), and advanced control strategies. The theoretical developments are complemented with practical implementations in MATLAB and Python, numerical simulations, and case studies from real space missions. This resource is designed for graduate students, researchers, and practitioners in aerospace engineering and related fields.
+keywords:
+  - Spacecraft Dynamics
+  - Attitude Control
+  - Embedded Model Control
+  - Quaternion Kinematics
+  - Orbital Mechanics
+  - ADCS
+  - GNC Systems
+  - Attitude Determination
+  - Sensor Fusion
+  - Optimal Control
+funding: |
+  This research was supported by the Universidad Pedagógica y Tecnológica de Colombia (UPTC), School of Engineering.
+license: "CC BY-NC-SA 4.0"
+copyright: 
+  holder: Emanuel Quintana Silva
+  year: 2024
+doi: "10.xxxx/xxxxxx"
+version: 1.0.0
+bibliography: references/references.bib
+csl: references/ieee.csl
+link-citations: true
 ---
 
-## Section
-This is a simple placeholder for the manuscript's main document [@knuth84].
+<!-- Incluir badges -->
+<div align="center" style="margin: 20px 0;">
+
+[![Educational Material](https://img.shields.io/badge/-Educational%20Material-important)](https://creativecommons.org/licenses/by-nc-sa/4.0/)
+[![Based on: Canuto et al.](https://img.shields.io/badge/-Based%20on%3A%20Canuto%20et%20al.-blue)](https://www.elsevier.com/books/spacecraft-dynamics-and-control/canuto/978-0-08-100700-5)
+[![License: CC BY-NC-SA 4.0](https://img.shields.io/badge/License-CC%20BY--NC--SA%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by-nc-sa/4.0/)
+[![Quarto](https://img.shields.io/badge/Made%20with-Quarto-1a73e8.svg)](https://quarto.org/)
+[![UPTC Student](https://img.shields.io/badge/-UPTC%20Student-005baa.svg)](https://www.uptc.edu.co/)
+[![School of Engineering](https://img.shields.io/badge/-School%20of%20Engineering-cc0000.svg)]()
+
+</div>
+
+<div class="alert alert-warning" role="alert" style="margin: 20px 0; padding: 15px; border-left: 4px solid #ffc107;">
+<strong> Material de Estudio - Atribución Académica</strong><br>
+Este trabajo es un <strong>material de estudio desarrollado por un estudiante</strong> basado en el libro 
+"<em>Spacecraft Dynamics and Control: The Embedded Model Control Approach</em>" de 
+<strong>Enrico Canuto, Carlo Novara, Luca Massotti, Donato Carlucci y Carlos Perez Montenegro</strong>. 
+El contenido se comparte con fines exclusivamente educativos bajo doctrina de uso justo.
+</div>
+
+
+# Preface {.unnumbered}
+
+## Motivation and Context
+
+The design and operation of spacecraft guidance, navigation, and control (GNC) systems represent one of the most challenging aspects of space mission engineering. Modern spacecraft must achieve increasingly stringent pointing accuracy requirements—often at the arc-second level—while operating in harsh environments characterized by extreme temperatures, radiation, microgravity, and complex disturbance torques.
+
+This manuscript emerged from the need for a comprehensive, mathematically rigorous treatment of spacecraft dynamics and control that bridges theoretical foundations with practical implementation. The work is heavily influenced by the Embedded Model Control (EMC) methodology developed by Canuto et al. [@canuto2018spacecraft], which provides a systematic framework for handling model uncertainties and disturbance rejection.
+
+## Target Audience
+
+This text is intended for:
+
+- **Graduate students** in aerospace engineering, mechanical engineering, and applied mathematics pursuing research in spacecraft control systems
+- **Practicing engineers** working in the space industry who need a reference for ADCS design and analysis
+- **Researchers** in control theory interested in applications to aerospace systems
+- **Advanced undergraduate students** with strong backgrounds in dynamics, linear algebra, and control theory
+
+## Prerequisites
+
+Readers should have familiarity with:
+
+- **Linear Algebra**: Vector spaces, matrix operations, eigenvalues and eigenvectors
+- **Differential Equations**: Ordinary differential equations, state-space representations
+- **Classical Mechanics**: Newtonian mechanics, rigid body dynamics, kinematics
+- **Control Theory**: Feedback control, stability analysis, state-space methods
+- **Programming**: MATLAB or Python for numerical computations
+
+## Organization and Structure
+
+The manuscript is organized into five main parts:
+
+**Part I: Mathematical Foundations** establishes the mathematical framework, including vector and matrix algebra, rotation representations, and coordinate transformations. Special emphasis is placed on quaternion algebra and its properties.
+
+**Part II: Dynamics** develops the equations of motion for spacecraft, covering both orbital dynamics (translational motion) and attitude dynamics (rotational motion). Environmental perturbations and their effects are analyzed in detail.
+
+**Part III: Sensors and Actuators** provides detailed models of the sensors and actuators used in spacecraft GNC systems, including gyroscopes, star trackers, reaction wheels, and thrusters.
+
+**Part IV: Estimation and Control** presents methods for attitude determination from sensor measurements and develops control laws for both attitude and orbital control. The EMC approach is introduced and applied.
+
+**Part V: Applications** demonstrates the concepts through detailed case studies, including a complete ADCS design for a scientific mission.
+
+## Pedagogical Approach
+
+Each chapter follows a consistent structure:
+
+1. **Objectives**: Clear statement of learning goals
+2. **Theoretical Development**: Rigorous derivations with detailed explanations
+3. **Examples**: Worked examples illustrating key concepts
+4. **Computational Implementation**: MATLAB/Python code for algorithms
+5. **Exercises**: Problems ranging from basic to advanced
+6. **References**: Comprehensive bibliography for further study
+
+Mathematical notation is introduced systematically and collected in tables for easy reference. Algorithms are presented in both pseudocode and actual implementations.
+
+## Software and Data
+
+All software implementations, datasets, and simulation results are available in the accompanying GitHub repository:
+
+[https://github.com/equintana-uptc/spacecraft-dynamics-control](https://github.com/equintana-uptc/spacecraft-dynamics-control)
+
+The repository includes:
+
+- **MATLAB functions** for attitude conversions, dynamics propagation, and control algorithms
+- **Python package** `spacecraft_dynamics` with equivalent functionality
+- **Jupyter notebooks** with interactive examples and visualizations
+- **Unit tests** ensuring code correctness
+- **Documentation** with API references and tutorials
+
+## Acknowledgments {.unnumbered}
+
+This work would not have been possible without the support and resources provided by the Universidad Pedagógica y Tecnológica de Colombia (UPTC), particularly the School of Engineering.
+
+I am deeply grateful to the foundational work of Enrico Canuto, Carlo Novara, Luca Massotti, Donato Carlucci, and Carlos Perez Montenegro, whose textbook on Embedded Model Control provided the conceptual framework for much of this manuscript.
+
+Special thanks to the open-source community for developing the tools that made this work possible: Quarto for scientific publishing, Python and MATLAB for numerical computing, and Git/GitHub for version control and collaboration.
+
+## How to Cite This Work {.unnumbered}
+
+If you use this work in your research, please cite as:
+
+Quintana Silva, E. (2024). *Spacecraft Dynamics and Control: Mathematical Foundations and Applications*. Universidad Pedagógica y Tecnológica de Colombia. [https://doi.org/10.xxxx/xxxxxx](https://doi.org/10.xxxx/xxxxxx)
+
+## Contact Information {.unnumbered}
+
+**Emanuel Quintana Silva**  
+School of Engineering  
+Universidad Pedagógica y Tecnológica de Colombia  
+Sogamoso, Boyacá, Colombia  
+
+Email: [emanuel.quintana@uptc.edu.co](mailto:emanuel.quintana@uptc.edu.co)  
+GitHub: [https://github.com/equintana-uptc](https://github.com/equintana-uptc)  
+ORCID: [0000-0000-0000-0000](https://orcid.org/0000-0000-0000-0000)
+
+---
+
+# Introduction {#sec-introduction}
+
+## Overview of Spacecraft Control Systems
+
+Spacecraft Guidance, Navigation, and Control (GNC) systems are responsible for determining the spacecraft's position and orientation (navigation), computing desired trajectories and attitudes (guidance), and generating commands to actuators to follow these trajectories (control).
+
+The GNC system typically consists of three main subsystems:
+
+1. **Attitude Determination and Control System (ADCS)**: Manages spacecraft orientation
+2. **Orbital Control System**: Maintains desired orbital parameters
+3. **Navigation System**: Determines position and velocity
+
+### Functional Architecture
+
+The typical architecture of a spacecraft GNC system is illustrated in @fig-gnc-architecture.
+
+```{mermaid}
+#| label: fig-gnc-architecture
+#| fig-cap: "Functional architecture of a spacecraft GNC system"
+#| fig-width: 100%
+
+flowchart TD
+    A[Reference Commands] --> B[Guidance]
+    B --> C[Control Law]
+    D[Sensors] --> E[State Estimation]
+    E --> C
+    C --> F[Actuators]
+    F --> G[Spacecraft Dynamics]
+    G --> H[Environment]
+    H --> G
+    G --> D
+    
+    style A fill:#e1f5ff
+    style B fill:#fff4e1
+    style C fill:#ffe1e1
+    style D fill:#e1ffe1
+    style E fill:#f0e1ff
+    style F fill:#ffe1f0
+    style G fill:#ffffe1
+    style H fill:#e1e1e1
+```
+
+## Historical Perspective
+
+The field of spacecraft control has evolved significantly since the dawn of the space age:
+
+- **1957**: Sputnik 1 - First artificial satellite, passive attitude control
+- **1960s**: Active three-axis stabilization developed for communications satellites
+- **1970s**: Momentum wheels and magnetic torquers become standard
+- **1980s**: Star trackers enable high-precision attitude determination
+- **1990s**: GPS receivers for orbital navigation
+- **2000s**: Embedded Model Control and advanced filtering techniques
+- **2010s**: Formation flying and distributed spacecraft systems
+- **2020s**: Autonomous navigation, AI/ML applications, CubeSat technologies
+
+## Mathematical Preliminaries
+
+### Notation Conventions
+
+Throughout this manuscript, we employ the following notation conventions:
+
+**Scalars**: Represented by italic lowercase or uppercase letters: $t, m, J, \mu$
+
+**Vectors**: Represented by bold lowercase letters: $\vec{r}$, $\vec{v}$, $\vec{\omega}$
+
+**Matrices**: Represented by bold uppercase letters: $\mathbf{R}, \mathbf{A}, \mathbf{J}$
+
+**Coordinate Frames**: Denoted by calligraphic letters: $\mathcal{F}_I$ (inertial), $\mathcal{F}_B$ (body)
+
+**Operators**:
+
+- $\|\cdot\|$: Euclidean norm
+- $\times$: Cross product
+- $\otimes$: Quaternion multiplication
+- $\cdot$: Dot product
+- $^T$: Matrix/vector transpose
+
+### Reference Frames
+
+We define the following standard reference frames:
+
+**Earth-Centered Inertial (ECI) Frame** $\mathcal{F}_I$:
+
+- Origin: Earth's center of mass
+- $\hat{x}_I$: Vernal equinox direction
+- $\hat{z}_I$: Earth's rotation axis (north)
+- $\hat{y}_I$: Completes right-handed system
+
+**Orbital Frame** $\mathcal{F}_O$:
+
+- Origin: Spacecraft center of mass
+- $\hat{x}_O$: Radial direction (nadir)
+- $\hat{z}_O$: Normal to orbital plane
+- $\hat{y}_O$: Along-track direction
+
+**Body Frame** $\mathcal{F}_B$:
+
+- Origin: Spacecraft center of mass
+- Axes: Aligned with principal moments of inertia
+
+## Scope and Objectives
+
+This manuscript aims to provide:
+
+1. **Mathematical Rigor**: Complete derivations of fundamental equations
+2. **Physical Insight**: Clear explanations of underlying physics
+3. **Practical Methods**: Implementable algorithms and numerical techniques
+4. **Realistic Models**: High-fidelity sensor and actuator models
+5. **Design Guidelines**: Systematic approaches to control system design
+
+### Learning Objectives
+
+After studying this material, readers should be able to:
+
+- Represent spacecraft attitude using various parameterizations
+- Derive and propagate equations of motion for spacecraft
+- Model environmental disturbances and their effects
+- Design attitude determination algorithms from sensor measurements
+- Develop control laws for attitude and orbital control
+- Implement and simulate complete GNC systems
+- Analyze stability and performance of closed-loop systems
+
+## Mathematical Framework
+
+### State-Space Representation
+
+Spacecraft dynamics are naturally expressed in state-space form:
+
+$$
+\begin{aligned}
+\dot{\vec{x}} &= \vec{f}(\vec{x}, \vec{u}, t) + \vec{w}(t) \\
+\vec{y} &= \vec{h}(\vec{x}, t) + \vec{v}(t)
+\end{aligned}
+$$ {#eq-state-space}
+
+where:
+
+- $\vec{x} \in \mathbf{RR}^n$: State vector
+- $\vec{u} \in \mathbf{RR}^m$: Control input
+- $\vec{y} \in \mathbf{RR}^p$: Measurement vector
+- $\vec{w}(t)$: Process noise
+- $\vec{v}(t)$: Measurement noise
+
+### Attitude Representation
+
+The attitude (orientation) of a rigid body can be represented by a rotation matrix $\mathbf{R} \in \mathrm{SO(3)}$, where:
+
+$$ 
+\mathrm{SO(3)} = \{\mathbf{R} \in \mathbb{R}^{3\times 3} : \mathbf{R}^T\mathbf{R} = \mathbf{I}, \det(\mathbf{R}) = +1\} 
+$$
+{#eq-so3}
+
+The Special Orthogonal Group $\mathrm{SO(3)}$ is a three-dimensional manifold, requiring three independent parameters for complete specification.
+
+**Unit Quaternions** provide a singularity-free four-parameter representation:
+
+$$
+\mathbf{q} = \begin{bmatrix} q_0 \\ \vec{q}_v \end{bmatrix} \in \mathbb{S}^3, \quad \|\mathbf{q}\| = 1
+$$ {#eq-quaternion}
+
+The relationship between rotation angle $\phi$ about axis $\vec{e}$ and quaternion is:
+
+$$
+\mathbf{q} = \begin{bmatrix} \cos(\phi/2) \\ \vec{e} \sin(\phi/2) \end{bmatrix}
+
+$$ {#eq-axis-angle-quat}
+
+## The Embedded Model Control Paradigm
+
+The Embedded Model Control (EMC) approach, central to this manuscript, is based on the following principles:
+
+### 1. Disturbance Modeling
+
+Rather than treating disturbances as unknown inputs, EMC explicitly models their dynamics:
+
+$$
+\dot{\vec{x}}_d = \mathbf{A}_d\vec{x}_d + \vec{w}_d(t)
+$$ {#eq-disturbance-model}
+
+where $\vec{x}_d$ represents the disturbance state.
+
+### 2. State Prediction
+
+A state predictor estimates both plant and disturbance states:
+
+$$
+\begin{aligned}
+\dot{\hat{\vec{x}}} &= \mathbf{A}\hat{\vec{x}} + \mathbf{B}\vec{u} + \mathbf{L}(\vec{y} - \hat{\vec{y}}) \\
+\dot{\hat{\vec{x}}}_d &= \mathbf{A}_d\hat{\vec{x}}_d + \mathbf{L}_d(\vec{y} - \hat{\vec{y}})
+\end{aligned}
+$$ {#eq-state-predictor}
+
+### 3. Control Law
+
+The control law combines reference tracking and disturbance rejection:
+
+$$
+\vec{u} = \vec{u}_{cmd}(\vec{r}) + \vec{u}_{dist}(\hat{\vec{x}}_d)
+$$ {#eq-emc-control}
+
+This architecture provides:
+
+- **Systematic disturbance rejection**
+- **Explicit handling of model uncertainty**
+- **Separation of tracking and regulation**
+- **High bandwidth with robustness**
+
+## Organization of Remaining Chapters
+
+The remainder of this manuscript is organized as follows:
+
+**Chapter 2** develops the mathematical theory of attitude representation, including rotation matrices, Euler angles, quaternions, and Modified Rodrigues Parameters.
+
+**Chapter 3** presents orbital dynamics, from the two-body problem through orbit propagation methods and trajectory analysis.
+
+**Chapter 4** analyzes environmental perturbations affecting spacecraft, including gravitational harmonics, atmospheric drag, solar radiation pressure, and magnetic fields.
+
+**Chapter 5** treats perturbed orbital dynamics, deriving the Gauss and Lagrange variational equations and analyzing relative motion.
+
+**Chapter 6** develops attitude kinematics, relating angular velocity to time derivatives of attitude parameters.
+
+**Chapter 7** presents attitude dynamics, deriving Euler's equations and analyzing torque-free motion and environmental torques.
+
+**Chapters 8-9** provide detailed models of sensors and actuators used in spacecraft GNC systems.
+
+**Chapters 10-12** develop estimation and control methods, including attitude determination algorithms and control law design.
+
+**Chapters 13-14** present applications through case studies and introduce advanced topics.
+
+---
+
+## Summary
+
+This introduction has provided:
+
+- An overview of spacecraft GNC systems and their architecture
+- Historical context for the development of control technologies
+- Mathematical notation and conventions used throughout
+- The conceptual framework of Embedded Model Control
+- Organization and learning objectives for the manuscript
+
+The following chapters will develop these concepts in detail, always emphasizing the connection between mathematical theory and practical implementation.
+
+## Exercises {.unnumbered}
+
+::: {#exr-frame-transformation}
+**Reference Frame Transformation**: Given a vector $\vec{r}_I = [1, 2, 3]^T$ expressed in the inertial frame, and a rotation matrix $\mathbf{R}_{B/I}$ representing a 45° rotation about the $z$-axis, compute $\vec{r}_B$.
+:::
+
+::: {#exr-quaternion-basics}
+**Quaternion Representation**: A spacecraft rotates 90° about the unit vector $\vec{e} = [1/\sqrt{3}, 1/\sqrt{3}, 1/\sqrt{3}]^T$. Find the corresponding unit quaternion.
+:::
+
+::: {#exr-gnc-architecture}
+**GNC System Analysis**: For a low Earth orbit satellite requiring 0.1° pointing accuracy, identify the key sensors and actuators needed. Justify your selections based on accuracy, mass, power, and cost considerations.
+:::
+
+## Further Reading {.unnumbered}
+
+For deeper exploration of topics introduced in this chapter:
+
+- @wertz2012spacecraft provides comprehensive coverage of spacecraft attitude systems
+- @wie2008space offers extensive treatment of dynamics and control
+- @markley2014fundamentals presents modern attitude determination and control methods
+- @canuto2018spacecraft develops the Embedded Model Control approach in detail
+
+---
+
+**Next**: [Chapter 2: Attitude Representation](#sec-attitude-representation)

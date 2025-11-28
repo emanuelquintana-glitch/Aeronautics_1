@@ -1,24 +1,40 @@
 project:
-  type: manuscript
+  type: book
   output-dir: _output
 
-manuscript:
-  article: manuscript/index.qmd
+book:
+  title: "Spacecraft Dynamics and Control"
+  author: "Emanuel Quintana Silva"
+  date: today
+  chapters:
+    - index.qmd
+    - chapters/01-mathematical-preliminaries/index.qmd
+    - chapters/02-attitude-representation/index.qmd
+    - chapters/03-orbital-dynamics/index.qmd
+    - chapters/04-perturbations/index.qmd
+    - chapters/05-perturbed-dynamics/index.qmd
+    - chapters/06-attitude-kinematics/index.qmd
+    - chapters/07-attitude-dynamics/index.qmd
+    - chapters/08-sensors/index.qmd
+    - chapters/09-actuators/index.qmd
+    - chapters/10-attitude-determination/index.qmd
+    - chapters/11-orbital-control/index.qmd
+    - chapters/12-attitude-control/index.qmd
+    - chapters/13-case-study/index.qmd
+    - chapters/14-advanced-topics/index.qmd
+    - appendices/A-mathematical-proofs.qmd
+    - appendices/B-derivations.qmd
+    - appendices/C-algorithms.qmd
+
+bibliography: references/references.bib
 
 format:
   html:
     theme: cosmo
     toc: true
-    toc-depth: 3
-    number-sections: true
-    code-fold: true
   pdf:
     documentclass: book
-    toc: true
   docx: default
-
-bibliography: references/references.bib
-link-citations: true
 
 execute:
   freeze: auto
