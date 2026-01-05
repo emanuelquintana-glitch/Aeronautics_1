@@ -1,4 +1,4 @@
-# Spacecraft Dynamics and Control: Mathematical Foundations and Applications
+# *Spacecraft Dynamics and Control: Mathematical Foundations and Applications*
 
 [![Educational Material](https://img.shields.io/badge/-Educational%20Material-important)](https://creativecommons.org/licenses/by-nc-sa/4.0/)
 [![Based on: Canuto et al.](https://img.shields.io/badge/-Based%20on%3A%20Canuto%20et%20al.-blue)](https://www.elsevier.com/books/spacecraft-dynamics-and-control/canuto/978-0-08-100700-5)
