@@ -45,7 +45,7 @@ ResearchGate: [Profile](https://www.researchgate.net/)
 
 ---
 
-## Introduction.
+## Introduction
 
 ### Motivation
 
