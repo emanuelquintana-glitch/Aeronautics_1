@@ -58,7 +58,7 @@ The design and analysis of spacecraft guidance, navigation, and control systems 
 
 This repository provides a systematic treatment of these topics, emphasizing mathematical rigor and practical implementation.
 
-### Scope and Objectives.
+### Scope and Objectives
 
 The primary objectives are:
 
