@@ -69,7 +69,7 @@ The primary objectives are:
 
 ---
 
-## Mathematical Framework.
+## Mathematical Framework
 
 ### Notation Conventions
 
