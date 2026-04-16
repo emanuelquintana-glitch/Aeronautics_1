@@ -7,7 +7,7 @@
 [![UPTC Student](https://img.shields.io/badge/-UPTC%20Student-005baa.svg)](https://www.uptc.edu.co/)
 [![School of Engineering](https://img.shields.io/badge/-School%20of%20Engineering-cc0000.svg)]()
 
-## Abstract.
+## Abstract
 
 This repository presents a comprehensive treatment of spacecraft dynamics and control, implementing the Embedded Model Control (EMC) approach as developed by Canuto et al. The work provides rigorous mathematical foundations, detailed derivations, and practical implementations for attitude determination and control systems (ADCS), orbital mechanics, and guidance, navigation, and control (GNC) subsystems.
 
@@ -69,7 +69,7 @@ The primary objectives are:
 
 ---
 
-## Mathematical Framework
+## Mathematical Framework.
 
 ### Notation Conventions
 
