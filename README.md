@@ -626,7 +626,7 @@ Please use GitHub Issues with appropriate labels:
  Universidad Pedagógica y Tecnológica de Colombia  
  Sogamoso, Boyacá, Colombia
 
-### Project Links.
+### Project Links
 
 - **Repository**: https://github.com/equintana-uptc/spacecraft-dynamics-control
 - **Documentation**: https://equintana-uptc.github.io/spacecraft-dynamics-control
