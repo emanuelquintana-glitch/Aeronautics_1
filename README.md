@@ -513,7 +513,7 @@ If you use this work in your research, please cite:
 }
 ```
 
-### APA Format
+### APA Format.
 
 Quintana Silva, E. (2024). *Spacecraft dynamics and control: Mathematical foundations and applications*. Universidad Pedagógica y Tecnológica de Colombia. https://github.com/equintana-uptc/spacecraft-dynamics-control
 
