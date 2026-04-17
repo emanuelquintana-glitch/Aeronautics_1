@@ -105,7 +105,7 @@ $$
 
 ---
 
-## Repository Structure
+## Repository Structure.
 
 ```
 spacecraft-dynamics-control/
