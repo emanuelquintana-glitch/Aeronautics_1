@@ -249,7 +249,7 @@ black>=23.0.0
 
 ---
 
-## Usage and Compilation.
+## Usage and Compilation
 
 ### Building the Manuscript
 
