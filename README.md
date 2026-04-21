@@ -587,7 +587,7 @@ Special thanks to the developers of:
 
 ---
 
-## Contributing
+## Contributi
 ### Guidelines for Contributors
 
 Contributions are welcome! Please follow these guidelines:
