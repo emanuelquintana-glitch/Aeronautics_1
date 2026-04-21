@@ -617,7 +617,6 @@ Please use GitHub Issues with appropriate labels:
 
 ---
 
-## Contact and Support
 
 ### Primary Contact
 
